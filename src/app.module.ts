@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, MiddlewareConsumer } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import {TypeOrmModule}from '@nestjs/typeorm'
@@ -17,9 +17,14 @@ import { typeToolModule } from './typeTool/typeTool.module';
 import { RoleModule } from './role/role.module';
 import {UserModule} from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { AuthMiddleware } from './auth/auth.middleware';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
-  imports: [
+  imports: [ JwtModule.register({
+    secret: 'YOUR_SECRET_KEY',
+    // otras opciones de configuración...
+  }),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
@@ -33,8 +38,13 @@ import { AuthModule } from './auth/auth.module';
   ClientModule, typeClientModule, ContactModule, 
   HomeModule, ServiceModule, typeServiceModule,
   FileModule, FolderModule, ToolModule, typeToolModule,
-  ProyectModule, typeProjectModule, RoleModule, UserModule, AuthModule],
+  ProyectModule, typeProjectModule, RoleModule, UserModule,
+   AuthModule, ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthMiddleware).exclude('auth/login').forRoutes('*');
+  }
+}

@@ -12,7 +12,7 @@ export class typeProjectController{
     createTypeProject(@Body() newTypeProject: createTypeProyectDto){
         return this.typeProjectService.createTypeProyect(newTypeProject)
     }
-
+    
     @Get()
     getTypeProjects(): Promise<typeProject[]> {
       return this.typeProjectService.getTypeProjects();
