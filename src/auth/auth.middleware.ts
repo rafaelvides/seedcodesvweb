@@ -15,10 +15,10 @@ export class AuthMiddleware implements NestMiddleware {
         req.user = decodedToken; // Almacena los datos del token decodificado en la propiedad 'user' del objeto de solicitud (req)
         next();
       } catch (error) {
-        res.status(401).json({ message: 'Token inválido' });
+        res.status(401).json({ message: 'Invalid token' });
       }
     } else {
-      res.status(401).json({ message: 'Token no proporcionado' });
+      res.status(401).json({ message: 'Token not provided' });
     }
   }
 }

@@ -1,4 +1,4 @@
-import {PrimaryGeneratedColumn, Entity, Column, ManyToMany, ManyToOne} from 'typeorm'
+import {PrimaryGeneratedColumn, Entity, Column, ManyToMany, ManyToOne, OneToMany} from 'typeorm'
 import {Tool} from '../tool/tool.entity'
 import {typeProject} from '../typeProject/typeProject.entity'
 import {Client} from '../client/client.entity'
@@ -30,7 +30,7 @@ export class Proyect {
     @Column()
     userId: number
 
-    @ManyToMany(() => Tool, tool => tool.projects)
+    @OneToMany(() => Tool, tool => tool.projects)
     tool: Tool
 
     @ManyToOne(() => typeProject, typeproyect => typeproyect.proyects)

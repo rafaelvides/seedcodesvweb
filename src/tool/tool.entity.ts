@@ -1,4 +1,4 @@
-import {PrimaryGeneratedColumn, Entity, Column, ManyToOne, ManyToMany} from 'typeorm'
+import {PrimaryGeneratedColumn, Entity, Column, ManyToOne} from 'typeorm'
 import {typeTool} from '../typeTool/typeTool.entity'
 import {Proyect} from '../project/project..entity'
 
@@ -19,7 +19,7 @@ export class Tool {
     @ManyToOne(() => typeTool, typetool => typetool.tools)
     type: typeTool;
 
-    @ManyToMany(() => Proyect, proyect => proyect.tool)
+    @ManyToOne(() => Proyect, proyect => proyect.tool)
     projects: Proyect[]
 
 }

@@ -1,10 +1,10 @@
 import { Module, MiddlewareConsumer } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import {TypeOrmModule}from '@nestjs/typeorm'
-import {ClientModule} from './client/client.module'
-import {typeClientModule} from './typeClient/typeClient.module'
-import {ContactModule} from './contact/contact.module'
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ClientModule } from './client/client.module';
+import { typeClientModule } from './typeClient/typeClient.module';
+import { ContactModule } from './contact/contact.module';
 import { HomeModule } from './home/home.module';
 import { ServiceModule } from './service/service.module';
 import { typeServiceModule } from './typeService/typeService.module';
@@ -15,16 +15,17 @@ import { ProyectModule } from './project/project.module';
 import { ToolModule } from './tool/tool.module';
 import { typeToolModule } from './typeTool/typeTool.module';
 import { RoleModule } from './role/role.module';
-import {UserModule} from './user/user.module';
+import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { AuthMiddleware } from './auth/auth.middleware';
 import { JwtModule } from '@nestjs/jwt';
 
 @Module({
-  imports: [ JwtModule.register({
-    secret: 'YOUR_SECRET_KEY',
-    // otras opciones de configuración...
-  }),
+  imports: [
+    JwtModule.register({
+      secret: 'YOUR_SECRET_KEY',
+      // otras opciones de configuración...
+    }),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
@@ -33,13 +34,24 @@ import { JwtModule } from '@nestjs/jwt';
       password: 'password',
       database: 'seedcodesv',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true
+      synchronize: true,
     }),
-  ClientModule, typeClientModule, ContactModule, 
-  HomeModule, ServiceModule, typeServiceModule,
-  FileModule, FolderModule, ToolModule, typeToolModule,
-  ProyectModule, typeProjectModule, RoleModule, UserModule,
-   AuthModule, ],
+    ClientModule,
+    typeClientModule,
+    ContactModule,
+    HomeModule,
+    ServiceModule,
+    typeServiceModule,
+    FileModule,
+    FolderModule,
+    ToolModule,
+    typeToolModule,
+    ProyectModule,
+    typeProjectModule,
+    RoleModule,
+    UserModule,
+    AuthModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
