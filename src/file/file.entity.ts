@@ -12,6 +12,9 @@ export class File {
     @Column()
     folderId: number
 
+    @Column({ default: true })
+    isActive: boolean
+
     @ManyToOne(() => Folder, folder => folder.files)
     folder: Folder
 

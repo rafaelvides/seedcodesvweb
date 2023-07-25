@@ -19,23 +19,27 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { AuthMiddleware } from './auth/auth.middleware';
 import { JwtModule } from '@nestjs/jwt';
+import {Role} from './role/role.entity'
+import * as dotenv from 'dotenv'; 
 
+dotenv.config();
 @Module({
   imports: [
     JwtModule.register({
-      secret: 'YOUR_SECRET_KEY',
+      secret: process.env.JWT_SECRET,
       // otras opciones de configuración...
     }),
     TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: 'password',
-      database: 'seedcodesv',
+      type: process.env.DB_TYPE as any,
+      host: process.env.DB_HOST,
+      port: parseInt(process.env.DB_PORT),
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
+    TypeOrmModule.forFeature([Role]),
     ClientModule,
     typeClientModule,
     ContactModule,

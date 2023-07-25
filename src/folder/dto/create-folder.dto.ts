@@ -10,4 +10,7 @@ export class createFolderDto{
     @IsNotEmpty()
     @MinLength(3)
     name: string
+
+    isActive: boolean
+
 }

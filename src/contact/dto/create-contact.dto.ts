@@ -5,6 +5,10 @@ export class createContactDto {
   @IsNotEmpty()
   @MinLength(10)
   description: string;
-
+  
+  @IsString()
+  @IsNotEmpty()
   typeContact: string;
+
+  isActive: boolean
 }

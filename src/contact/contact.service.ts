@@ -1,69 +1,172 @@
-import {Injectable, HttpException, HttpStatus, Inject} from '@nestjs/common'
+import { Injectable, HttpException, HttpStatus, Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import {Contact} from './contact.entity'
+import { Contact } from './contact.entity';
 import { Repository } from 'typeorm';
-import {createContactDto} from './dto/create-contact.dto'
+import { createContactDto } from './dto/create-contact.dto';
 import { updateContactDto } from './dto/update-contact.dto';
 
 @Injectable()
-export class ContactService{
-    constructor(
-       @InjectRepository(Contact) private contactRepository: Repository<Contact>
-    ){}
+export class ContactService {
+  constructor(
+    @InjectRepository(Contact) private contactRepository: Repository<Contact>,
+  ) {}
 
-    async createContact(Contact: createContactDto){
-        const contactFound = await this.contactRepository.findOne({
-            where:{
-                typeContact: Contact.typeContact
-            }
-        })
+  async createContact(contact: createContactDto) {
+    try {
+      const contactFound = await this.contactRepository.findOne({
+        where: {
+          typeContact: contact.typeContact,
+        },
+      });
 
-        if(contactFound){
-            return new HttpException('contact already exists', HttpStatus.NOT_FOUND)
-        }
+      if (contactFound) {
+        return {
+          ok: false,
+          msg: `typeContact already exists ${contact.typeContact}`,
+        };
+      }
 
-         const newContact = this.contactRepository.create(Contact)
-         return this.contactRepository.save(newContact)
+      this.contactRepository.save(contact);
+      return {
+        ok: true,
+        msg: 'Contact create',
+        contact,
+      };
+    } catch (error) {
+      throw new HttpException(
+        {
+          ok: false,
+          msg: `Error -> ${error.message}`,
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
+  }
 
-    getContacts(){
-        return this.contactRepository.find({
-            relations: ['homes']
-        })
+  async getContacts() {
+    try {
+      const contacts = await this.contactRepository.find({
+        where: {
+          isActive: true,
+        },
+      });
+      if (contacts.length > 0) {
+        // Si hay clientes activos, devolver la respuesta con los clientes encontrados
+        return {
+          ok: true,
+          contacts,
+        };
+      } else {
+        // Si no hay clientes activos, devolver la respuesta indicando que no se encontraron clientes
+        return {
+          ok: false,
+          msg: 'No active contacts found',
+        };
+      }
+    } catch (error) {
+      throw new HttpException(
+        {
+          ok: false,
+          msg: `Error -> ${error.message}`,
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
+  }
 
-    getContact(id: number){
-        const contactFound = this.contactRepository.findOne({
-            where: {
-                id
-            },
-            relations: ['homes']
-        })
-        if(!contactFound){
-            return new HttpException('contact not foound', HttpStatus.NOT_FOUND)
-        }
-        return contactFound
+  async getContact(id: number) {
+    try {
+      const contactFound = await this.contactRepository.findOne({
+        where: {
+          id,
+          isActive: true,
+        },
+      });
+      if (!contactFound) {
+        return {
+          ok: false,
+          mensaje: 'Contact not found',
+          status: HttpStatus.NOT_FOUND,
+        };
+      }
+      return {
+        ok: true,
+        contactFound,
+      };
+    } catch (error) {
+      throw new HttpException(
+        {
+          ok: false,
+          msg: `Error -> ${error.message}`,
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
+  }
 
-    async deleteContact(id: number){
-        const resul = await this.contactRepository.delete({id})
-            if(resul.affected === 0){
-                return new HttpException('Client not found', HttpStatus.NOT_FOUND)
-            }
-        return resul
+  async deleteContact(id: number) {
+    try {
+      const contact = await this.contactRepository.findOne({
+        where: {
+          id,
+          isActive: true,
+        },
+      });
+      if (!contact) {
+        return {
+          ok: false,
+          mensaje: 'Contact does not exist in the database',
+          status: HttpStatus.NOT_FOUND,
+        };
+      }
+      contact.isActive = false; // Cambiar el estado a 0 (inactivo)
+      await this.contactRepository.save(contact);
+
+      return {
+        ok: true,
+        msg: 'Contact successfully delete',
+      };
+    } catch (error) {
+      throw new HttpException(
+        {
+          ok: false,
+          msg: `Error -> ${error.message}`,
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
+  }
 
-    async updateContact(id: number, contact: updateContactDto){
-        const contactFound = await this.contactRepository.findOne({
-           where: {
-               id
-           }
-        });
-        if(!contactFound){
-           return new HttpException('contact not found', HttpStatus.NOT_FOUND);
-         }
-   
-       const updateContact = Object.assign(contactFound, contact)
-       return this.contactRepository.save(updateContact)
-       }
+  async updateContact(id: number, contact: updateContactDto) {
+    try {
+      const contactFound = await this.contactRepository.findOne({
+        where: {
+          id,
+          isActive: true,
+        },
+      });
+      if (!contactFound) {
+        return {
+          ok: false,
+          mensaje: 'Contact not found',
+          status: HttpStatus.NOT_FOUND,
+        };
+      }
+
+      const updateContact = Object.assign(contactFound, contact);
+      this.contactRepository.save(updateContact);
+      return {
+        ok: true,
+        msg: 'Contact was update',
+      };
+    } catch (error) {
+      throw new HttpException(
+        {
+          ok: false,
+          msg: `Error -> ${error.message}`,
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
 }

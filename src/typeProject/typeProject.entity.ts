@@ -10,6 +10,9 @@ export class typeProject{
     @Column()
     type: string
 
+    @Column({ default: true })
+    isActive: boolean
+
     @OneToMany(() => Proyect, proyect => proyect.type)
     proyects: Proyect[]
 }

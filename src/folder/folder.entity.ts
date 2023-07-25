@@ -12,6 +12,9 @@ export class Folder{
     @Column()
     name: string
 
+    @Column({ default: true })
+    isActive: boolean
+
     @OneToMany(() =>File, file => file.folder)
     files: File[]
 

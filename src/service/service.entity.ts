@@ -12,6 +12,9 @@ export class Service{
     @Column()
     tool: string
 
+    @Column({ default: true })
+    isActive: boolean
+
     @Column()
     typeId: number
 

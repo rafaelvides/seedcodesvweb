@@ -8,6 +8,9 @@ export class Role{
 
     @Column()
     rol: string
+
+    @Column({ default: true })
+    isActive: boolean
     
     @OneToMany(() => User, user => user.Role)
      users: User[]

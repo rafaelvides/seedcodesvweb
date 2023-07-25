@@ -27,6 +27,9 @@ export class Home{
     @Column()
     contactId: number
 
+    @Column({default: true})
+    isActive: boolean
+
     @ManyToOne(() => Contact, contact => contact.homes)
     contact: Contact
 }

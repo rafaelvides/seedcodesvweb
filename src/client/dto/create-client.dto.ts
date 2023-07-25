@@ -20,6 +20,8 @@ export class CreateClientDto {
   @IsNotEmpty()
   @Validate(ValidatorDUI)
   documentidentity: string;
+  
+  isActive: boolean;
 
   @IsString()
   @IsNotEmpty()

@@ -5,8 +5,8 @@ import {
   Post,
   ParseIntPipe,
   Param,
-  Delete, 
-  Put
+  Delete,
+  Put,
 } from '@nestjs/common';
 import { CreateTypeClientDto } from './dto/create-typeClient.dto';
 import { typeClientService } from './typeClient.service';
@@ -23,23 +23,28 @@ export class typeClientController {
   }
 
   @Get()
-  getTypeClients(): Promise<typeClient[]> {
+  getTypeClients(): Promise<
+    | { ok: boolean; typeClients: typeClient[]; msg?: string }
+    | { ok: boolean; msg: string }
+  > {
     return this.typeclientService.gettypeClients();
   }
 
   @Get(':id')
-  getTypeClient(@Param('id', ParseIntPipe)  id: number) {
+  getTypeClient(@Param('id', ParseIntPipe) id: number) {
     return this.typeclientService.gettypeClient(id);
   }
 
-  @Delete('id:')
-    deleteTypeClient(@Param('id', ParseIntPipe) id: number) {
-      return this.typeclientService.deleteTypeClient(id)
-    }
+  @Delete(':id')
+  deleteTypeClient(@Param('id', ParseIntPipe) id: number) {
+    return this.typeclientService.deleteTypeClient(id);
+  }
 
-    @Put(':id')
-    updateTypeClient(@Param('id', ParseIntPipe)id: number, @Body() typeClient: updateTypeClientDto){
-      return this.typeclientService.updateTypeClient(id, typeClient)
-    }
-
+  @Put(':id')
+  updateTypeClient(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() typeClient: updateTypeClientDto,
+  ) {
+    return this.typeclientService.updateTypeClient(id, typeClient);
+  }
 }

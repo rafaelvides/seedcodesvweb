@@ -12,6 +12,9 @@ export class Contact{
     @Column()
     description: string
 
+    @Column({ default: true })
+    isActive: boolean
+
     @OneToMany(() => Home, home => home.contact)
     homes: Home[]
 

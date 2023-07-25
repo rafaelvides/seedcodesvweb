@@ -9,6 +9,9 @@ export class typeClient{
     @Column()
     tipe: string
 
+    @Column({default: true})
+    isActive: boolean
+
     @OneToMany(() => Client, client => client.tipe)
     clients: Client[]
 }

@@ -12,4 +12,6 @@ export class createToolDto{
     @IsNumber()
     @IsNotEmpty()
     typeId: number
+
+    isActive: boolean
 }

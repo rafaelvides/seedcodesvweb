@@ -13,6 +13,9 @@ export class Tool {
     @Column()
     description: string
 
+    @Column({ default: true })
+    isActive: boolean
+
     @Column()
     typeId: number
 

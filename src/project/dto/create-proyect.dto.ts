@@ -9,6 +9,9 @@ export class createProyectDto{
     @IsNotEmpty()
     description: string
 
+    isActive: boolean
+
+
     @IsNumber()
     @IsNotEmpty()
     toolId: number

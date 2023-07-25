@@ -7,7 +7,10 @@ export class typeTool {
     id: number
 
     @Column()
-    type: string    
+    type: string 
+    
+    @Column({default: true})
+    isActive: boolean
 
     @Column({type: 'datetime' , default:() => 'CURRENT_TIMESTAMP'})
     launchdate: Date

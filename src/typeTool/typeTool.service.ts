@@ -1,67 +1,160 @@
-import {Injectable, HttpException, HttpStatus} from '@nestjs/common'
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import {typeTool} from './typeTool.entity'
+import { typeTool } from './typeTool.entity';
 import { createTypeToolDto } from './dto/create-typeTool.dto';
 import { updateTypeToolDto } from './dto/update-typeTool.dto';
 
 @Injectable()
-export class typeToolService{
-    constructor(
-        @InjectRepository(typeTool) private typeToolRepository: Repository<typeTool>
-    ){}
+export class typeToolService {
+  constructor(
+    @InjectRepository(typeTool)
+    private typeToolRepository: Repository<typeTool>,
+  ) {}
 
-    async createTypeTool(typeTool: createTypeToolDto){
-        const typeToolFound = await this.typeToolRepository.findOne({
-            where: {
-                type: typeTool.type
-            }
-        })
-        if(typeToolFound){
-            return new HttpException('type tool  already exists', HttpStatus.NOT_FOUND)
-        }
-        const newTypeTool = this.typeToolRepository.create(typeTool)
-        return this.typeToolRepository.save(newTypeTool)
+  async createTypeTool(typeTool: createTypeToolDto) {
+    try {
+      this.typeToolRepository.save(typeTool);
+      return {
+        ok: true,
+        msg: 'Type tool create',
+        typeTool,
+      };
+    } catch (error) {
+      throw new HttpException(
+        {
+          ok: false,
+          msg: `Error -> ${error.message}`,
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
+  }
 
-    gettypeTools(){
-      return this.typeToolRepository.find({
-        relations: ['tools']
-      })
+  async gettypeTools() {
+    try {
+      const typeTools = await this.typeToolRepository.find({
+        where: {
+          isActive: true,
+        },
+      });
+      if (typeTools.length > 0) {
+        // Si hay clientes activos, devolver la respuesta con los clientes encontrados
+        return {
+          ok: true,
+          typeTools,
+        };
+      } else {
+        // Si no hay clientes activos, devolver la respuesta indicando que no se encontraron clientes
+        return {
+          ok: false,
+          msg: 'No active type tool found',
+        };
+      }
+    } catch (error) {
+      throw new HttpException(
+        {
+          ok: false,
+          msg: `Error -> ${error.message}`,
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
+  }
 
-    gettypeTool(id: number){
-        const typeToolFound = this.typeToolRepository.findOne({
-            where: {
-                id
-            },
-            relations: ['tools']
-        })
-        if(!typeToolFound){
-            return new HttpException('type tool not found', HttpStatus.NOT_FOUND)
-        }
-        return typeToolFound
+  async gettypeTool(id: number) {
+    try {
+      const typeToolFound = this.typeToolRepository.findOne({
+        where: {
+          id,
+          isActive: true,
+        },
+      });
+      if (!typeToolFound) {
+        return {
+          ok: false,
+          mensaje: 'Type tool not found',
+          status: HttpStatus.NOT_FOUND,
+        };
+      }
+      return {
+        ok: true,
+        typeToolFound,
+      };
+    } catch (error) {
+      throw new HttpException(
+        {
+          ok: false,
+          msg: `Error -> ${error.message}`,
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
+  }
 
-    async deleteTypeTool(id: number){
-        const resul = await this.typeToolRepository.delete({id})
-            if(resul.affected === 0){
-                return new HttpException('Client not found', HttpStatus.NOT_FOUND)
-            }
-        return resul
+  async deleteTypeTool(id: number) {
+    try {
+      const typeToolFound = await this.typeToolRepository.findOne({
+        where: {
+          id,
+          isActive: true,
+        },
+      });
+      if (!typeToolFound) {
+        return {
+          ok: false,
+          mensaje: 'Type tool does not exist in the database',
+          status: HttpStatus.NOT_FOUND,
+        };
+      }
+      typeToolFound.isActive = false; // Cambiar el estado a 0 (inactivo)
+      await this.typeToolRepository.save(typeToolFound);
+
+      return {
+        ok: true,
+        msg: 'Type tool successfully delete',
+      };
+    } catch (error) {
+      throw new HttpException(
+        {
+          ok: false,
+          msg: `Error -> ${error.message}`,
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
+  }
 
-    async updateTool(id: number, tool: updateTypeToolDto){
-        const toolFound = await this.typeToolRepository.findOne({
-           where: {
-               id
-           }
-        });
-        if(!toolFound){
-           return new HttpException('type tool not found', HttpStatus.NOT_FOUND);
-         }
-   
-       const updateTool = Object.assign(toolFound, tool)
-       return this.typeToolRepository.save(updateTool)
-       }
+  async updateTool(id: number, tool: updateTypeToolDto) {
+    try {
+      const typeToolFound = await this.typeToolRepository.findOne({
+        where: {
+          id,
+          isActive: true,
+        },
+      });
+      if (!typeToolFound) {
+        return {
+          ok: false,
+          mensaje: 'Type tool not found',
+          status: HttpStatus.NOT_FOUND,
+        };
+      }
+
+      const updateTypeTool = Object.assign(typeToolFound, tool);
+      this.typeToolRepository.save(updateTypeTool);
+      return {
+        ok: true,
+        msg: 'Type tool was update',
+      };
+    } catch (error) {
+      throw new HttpException(
+        {
+          ok: false,
+          msg: `Error -> ${error.message}`,
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
 }

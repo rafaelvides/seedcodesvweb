@@ -1,4 +1,4 @@
-import {IsString, IsNotEmpty, MinLength, IsNumber, IsInt} from 'class-validator';
+import {IsString, IsNotEmpty, IsNumber, IsInt, IsUrl} from 'class-validator';
 
 export class createHomeDto{
 
@@ -18,9 +18,12 @@ export class createHomeDto{
     @IsNotEmpty()
     values: string
 
-    @IsString()
     @IsNotEmpty()
+    @IsUrl()
     imag: string
+
+    isActive: boolean
+
 
     @IsString()
     @IsNotEmpty()
@@ -30,4 +33,5 @@ export class createHomeDto{
     @IsNotEmpty()
     @IsInt()
     contactId: number
+
 }

@@ -10,4 +10,6 @@ export class createFileDto{
     @IsNotEmpty()
     @IsInt()
     folderId: number
+
+    isActive: boolean
 }

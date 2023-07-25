@@ -5,4 +5,6 @@ export class createRoleDto{
     @IsNotEmpty()
     @MinLength(3)
     rol: string
+
+    isActive: boolean
 }

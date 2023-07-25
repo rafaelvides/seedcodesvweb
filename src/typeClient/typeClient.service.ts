@@ -1,69 +1,159 @@
-import { Injectable, HttpException, HttpStatus } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { typeClient } from "./typeClient.entity";
-import { Repository } from "typeorm";
-import { CreateTypeClientDto } from "./dto/create-typeClient.dto";
-import { updateTypeClientDto } from "./dto/update-typeClient.dto";
-
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { typeClient } from './typeClient.entity';
+import { Repository } from 'typeorm';
+import { CreateTypeClientDto } from './dto/create-typeClient.dto';
+import { updateTypeClientDto } from './dto/update-typeClient.dto';
 @Injectable()
-export class typeClientService{  
-    constructor(
-        @InjectRepository(typeClient) private typeClientRepository: Repository<typeClient>, 
-  
-    ){}
-     
-    async createTypeClient(typeClient: CreateTypeClientDto ){
-        const typeclientFound = await this.typeClientRepository.findOne({
-            where: {
-                tipe: typeClient.tipe
-            }
-        })
-        if(typeclientFound){
-            return new HttpException('Type client already exists', HttpStatus.NOT_FOUND)
-        }
+export class typeClientService {
+  constructor(
+    @InjectRepository(typeClient)
+    private typeClientRepository: Repository<typeClient>,
+  ) {}
 
-        const newTypeClient = this.typeClientRepository.create(typeClient)
-        return this.typeClientRepository.save(newTypeClient)
+  async createTypeClient(typeClient: CreateTypeClientDto) {
+    try {
+      this.typeClientRepository.save(typeClient);
+      return {
+        ok: true,
+        msg: 'Tipe Client create',
+        typeClient,
+      };
+    } catch (error) {
+      throw new HttpException(
+        {
+          ok: false,
+          msg: `Error -> ${error.message}`,
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
+  }
 
-    gettypeClients(){
-        return this.typeClientRepository.find({
-            relations: ['clients']
-        })
+  async gettypeClients() {
+    try {
+      const typeClients = await this.typeClientRepository.find({
+        where: {
+          isActive: true,
+        },
+      });
+      if (typeClients.length > 0) {
+        // Si hay clientes activos, devolver la respuesta con los clientes encontrados
+        return {
+          ok: true,
+          typeClients,
+        };
+      } else {
+        // Si no hay clientes activos, devolver la respuesta indicando que no se encontraron clientes
+        return {
+          ok: false,
+          msg: 'No active type clients found',
+        };
+      }
+    } catch (error) {
+      throw new HttpException(
+        {
+          ok: false,
+          msg: `Error -> ${error.message}`,
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
+  }
 
-    gettypeClient(id: number){
-        const typeclientFound = this.typeClientRepository.findOne({
-            where: {
-                id
-            },
-         relations: ['clients']
-        })
-        if(!typeclientFound){
-            return new HttpException('type client not found', HttpStatus.NOT_FOUND)
-        }
-        return typeclientFound
+  async gettypeClient(id: number) {
+    try {
+      const typeclientFound = await this.typeClientRepository.findOne({
+        where: {
+          id,
+          isActive: true,
+        },
+      });
+      if (!typeclientFound) {
+        return {
+          ok: false,
+          mensaje: 'Type lient not found',
+          status: HttpStatus.NOT_FOUND,
+        };
+      }
+      return {
+        ok: true,
+        typeclientFound,
+      };
+    } catch (error) {
+      throw new HttpException(
+        {
+          ok: false,
+          msg: `Error -> ${error.message}`,
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
+  }
 
-    async deleteTypeClient(id: number){
-        const resul = await this.typeClientRepository.delete({id})
-            if(resul.affected === 0){
-                return new HttpException('type client not found', HttpStatus.NOT_FOUND)
-            }
-        return resul
+  async deleteTypeClient(id: number) {
+    try {
+      const typeClientFound = await this.typeClientRepository.findOne({
+        where: {
+          id,
+          isActive: true,
+        },
+      });
+      if (!typeClientFound) {
+        return {
+          ok: false,
+          mensaje: 'Type client does not exist in the database',
+          status: HttpStatus.NOT_FOUND,
+        };
+      }
+      typeClientFound.isActive = false; // Cambiar el estado a 0 (inactivo)
+      await this.typeClientRepository.save(typeClientFound);
+
+      return {
+        ok: true,
+        msg: 'Type client successfully delete',
+      };
+    } catch (error) {
+      throw new HttpException(
+        {
+          ok: false,
+          msg: `Error -> ${error.message}`,
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
+  }
 
-    async updateTypeClient(id: number, typeClient: updateTypeClientDto){
-        const typeClientFound = await this.typeClientRepository.findOne({
-           where: {
-               id
-           }
-        });
-        if(!typeClientFound){
-           return new HttpException('type client not found', HttpStatus.NOT_FOUND);
-         }
-   
-       const updateTypeClient = Object.assign(typeClientFound, typeClient)
-       return this.typeClientRepository.save(updateTypeClient)
-       }
+  async updateTypeClient(id: number, typeClient: updateTypeClientDto) {
+    try {
+      const typeClientFound = await this.typeClientRepository.findOne({
+        where: {
+          id,
+          isActive: true,
+        },
+      });
+      if (!typeClientFound) {
+        return {
+          ok: false,
+          mensaje: 'Type client not found',
+          status: HttpStatus.NOT_FOUND,
+        };
+      }
+
+      const updateTypeClient = Object.assign(typeClientFound, typeClient);
+      this.typeClientRepository.save(updateTypeClient);
+      return {
+        ok: true,
+        msg: 'Type client was update',
+      };
+    } catch (error) {
+      throw new HttpException(
+        {
+          ok: false,
+          msg: `Error -> ${error.message}`,
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
 }

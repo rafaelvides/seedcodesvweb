@@ -15,6 +15,9 @@ export class typeService{
     @Column()
     payment: number
 
+    @Column({default: true})
+    isActive: boolean
+
     @OneToMany(() => Service, service => service.type)
     services: Service[]
 }
