@@ -39,7 +39,7 @@ export class Proyect {
   @Column()
   userId: number;
 
-  @OneToMany(() => Tool, (tool) => tool.projects)
+  @ManyToOne(() => Tool, tool => tool.projectjs)
   tool: Tool;
 
   @ManyToOne(() => typeProject, (typeproyect) => typeproyect.proyects)

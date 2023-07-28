@@ -33,6 +33,7 @@ export class userService {
         password: hashedPassword,
         roleId: user.roleId,
       });
+      this.userRepository.save(newUser)
       return {
         ok: true,
         msg: 'User create',
