@@ -13,7 +13,7 @@ import { typeClientService } from './typeClient.service';
 import { typeClient } from './typeClient.entity';
 import { updateTypeClientDto } from './dto/update-typeClient.dto';
 
-@Controller('typeClientC')
+@Controller('typeClient')
 export class typeClientController {
   constructor(private typeclientService: typeClientService) {}
 

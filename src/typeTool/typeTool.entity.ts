@@ -13,9 +13,9 @@ export class typeTool {
     isActive: boolean
 
     @Column({type: 'datetime' , default:() => 'CURRENT_TIMESTAMP'})
-    launchdate: Date
+    launchDate: Date
 
-    @OneToMany(() => Tool, tool => tool.type)
+    @OneToMany(() => Tool, tool => tool.typeTool)
     tools: Tool[]
 
     

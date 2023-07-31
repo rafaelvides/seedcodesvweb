@@ -13,7 +13,7 @@ import { createUserDto } from './dto/create-user.dto';
 import { User } from './user.entity';
 import { updateUserDto } from './dto/update-user.dto';
 
-@Controller('UserC')
+@Controller('User')
 export class userController {
   constructor(private userService: userService) {}
 

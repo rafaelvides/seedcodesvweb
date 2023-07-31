@@ -13,7 +13,7 @@ import { createTypeToolDto } from './dto/create-typeTool.dto';
 import { typeTool } from './typeTool.entity';
 import { updateTypeToolDto } from './dto/update-typeTool.dto';
 
-@Controller('typeToolC')
+@Controller('typeTool')
 export class typeToolController {
   constructor(private typeToolService: typeToolService) {}
 

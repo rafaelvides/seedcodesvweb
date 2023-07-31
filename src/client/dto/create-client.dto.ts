@@ -19,7 +19,7 @@ export class CreateClientDto {
   @IsString() 
   @IsNotEmpty()
   @Validate(ValidatorDUI)
-  documentidentity: string;
+  documentIdentity: string;
   
   isActive: boolean;
 
@@ -30,5 +30,5 @@ export class CreateClientDto {
 
   @IsNumber()
   @IsNotEmpty()
-  tipeId: number;
+  typeClientId: number;
 }

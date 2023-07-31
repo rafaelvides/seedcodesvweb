@@ -16,8 +16,8 @@ export class Service{
     isActive: boolean
 
     @Column()
-    typeId: number
+    typeServiceId: number
 
     @ManyToOne(() => typeService, typeservice => typeservice.services)
-    type: typeService
+    typeService: typeService
 }

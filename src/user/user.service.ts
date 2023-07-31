@@ -5,15 +5,28 @@ import { Repository } from 'typeorm';
 import { hash } from 'bcrypt';
 import { createUserDto } from './dto/create-user.dto';
 import { updateUserDto } from './dto/update-user.dto';
+import { RoleService } from '../role/role.service';
+import { Role } from 'src/role/role.entity';
 
 @Injectable()
 export class userService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
+    private roleService: RoleService,
+    @InjectRepository(Role) private roleRepository: Repository<Role>,
   ) {}
 
   async createUser(user: createUserDto) {
     try {
+      const verifyIdRole = await this.roleRepository.findOne({
+        where: {id: user.roleId}
+      });
+      if(!verifyIdRole){
+        return{
+          ok: false,
+          msg: `Invalid roleId: ${user.roleId}`
+        }
+      }
       const userFound = await this.getUserByEmail(user.email);
 
       if (userFound) {
@@ -25,6 +38,14 @@ export class userService {
         }
       }
 
+      const role = await this.roleService.findByRoleId(user.roleId);
+      if (!role) {
+          return {
+            ok: false,
+            msg: `Invalid roleId: ${user.roleId}`
+          }
+      }
+
       const hashedPassword = await hash(user.password, 10); // Encripta la contraseña
 
       const newUser = this.userRepository.create({
@@ -33,7 +54,7 @@ export class userService {
         password: hashedPassword,
         roleId: user.roleId,
       });
-      this.userRepository.save(newUser)
+      this.userRepository.save(newUser);
       return {
         ok: true,
         msg: 'User create',

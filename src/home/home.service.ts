@@ -5,16 +5,26 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ContactService } from '../contact/contact.service';
 import { createHomeDto } from './dto/create-home.dto';
 import { updateHomeDto } from './dto/update-home.dto';
+import {Contact} from '../contact/contact.entity'
 
 @Injectable()
 export class homeService {
   constructor(
     @InjectRepository(Home) private homeRepository: Repository<Home>,
-    private contactoService: ContactService,
+    @InjectRepository(Contact) private contactRepository: Repository<Contact>,
   ) {}
 
   async createHome(home: createHomeDto) {
     try {
+      const verifyIdContact = await this.contactRepository.findOne({
+        where: {id: home.contactId}
+      });
+      if(!verifyIdContact){
+        return{
+          ok: false,
+          msg: `Invalid contactId: ${home.contactId}`
+        }
+      }
       this.homeRepository.save(home);
       return {
         ok: true,

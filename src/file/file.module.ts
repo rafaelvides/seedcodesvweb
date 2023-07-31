@@ -4,9 +4,10 @@ import {File} from '../file/file.entity'
 import {fileController} from './file.controller'
 import {fileService} from "./file.service";
 import {FolderModule} from "../folder/folder.module";
+import { Folder } from "src/folder/folder.entity";
 
 @Module ({
-    imports: [TypeOrmModule.forFeature([File]), FolderModule],
+    imports: [TypeOrmModule.forFeature([File, Folder]), FolderModule],
     controllers: [fileController],
     providers: [fileService],
     

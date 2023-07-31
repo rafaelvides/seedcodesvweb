@@ -14,6 +14,15 @@ export class typeProjectService {
 
   async createTypeProyect(typeProject: createTypeProyectDto) {
     try {
+      const typeProjectFound = await this.getTypeProjectByName(typeProject.type);
+      if (typeProjectFound) {
+        if (typeProjectFound.type === typeProject.type) {
+          return {
+            ok: false,
+            msg: `Name typeProject already exists ${typeProject.type}`,
+          };
+        }
+      }
       this.typeProjectRepository.save(typeProject);
       return {
         ok: true,
@@ -90,6 +99,14 @@ export class typeProjectService {
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
+  }
+
+  async getTypeProjectByName(type: string) {
+    const typeProjectFound = await this.typeProjectRepository.findOne({
+      where: [{ type, isActive: true }],
+    });
+
+    return typeProjectFound;
   }
 
   async deleteTypeProject(id: number) {

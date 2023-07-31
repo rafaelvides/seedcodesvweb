@@ -13,6 +13,6 @@ export class typeProject{
     @Column({ default: true })
     isActive: boolean
 
-    @OneToMany(() => Proyect, proyect => proyect.type)
+    @OneToMany(() => Proyect, proyect => proyect.typeProject)
     proyects: Proyect[]
 }

@@ -4,15 +4,27 @@ import { File } from './file.entity';
 import { Repository } from 'typeorm';
 import { createFileDto } from './dto/create-file.dto';
 import { updateFileDto } from './dto/update-file.dto';
+import {Folder} from '../folder/folder.entity'
 
 @Injectable()
 export class fileService {
   constructor(
     @InjectRepository(File) private fileRepository: Repository<File>,
+    @InjectRepository(Folder) private folderRepository: Repository<Folder>,
   ) {}
 
   async createFile(file: createFileDto) {
     try {
+      const verifyIdFolder = await this.folderRepository.findOne({
+        where: {id: file.folderId}
+      });
+      if(!verifyIdFolder){
+        return{
+          ok: false,
+          msg: `Invalid folderId: ${file.folderId}`
+        }
+      }
+
       this.fileRepository.save(file);
       return {
         ok: true,

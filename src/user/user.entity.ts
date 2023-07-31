@@ -17,7 +17,7 @@ export class User {
   password: string;
 
   @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
-  registerdate: Date;
+  registerDate: Date;
 
   @Column()
   roleId: number;

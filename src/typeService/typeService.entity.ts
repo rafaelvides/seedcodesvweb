@@ -18,6 +18,6 @@ export class typeService{
     @Column({default: true})
     isActive: boolean
 
-    @OneToMany(() => Service, service => service.type)
+    @OneToMany(() => Service, service => service.typeService)
     services: Service[]
 }

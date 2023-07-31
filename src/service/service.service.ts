@@ -4,15 +4,26 @@ import { Service } from '../service/service.entity';
 import { Repository } from 'typeorm';
 import { createServiceDto } from './dto/create-service.dto';
 import { updateServiceDto } from './dto/update-service.dto';
+import {typeService} from '../typeService/typeService.entity'
 
 @Injectable()
 export class serviceService {
   constructor(
     @InjectRepository(Service) private serviceRepository: Repository<Service>,
+    @InjectRepository(typeService) private typeServiceRepository: Repository<typeService>
   ) {}
 
   async createService(service: createServiceDto) {
     try {
+      const verifyIdTypeService = await this.typeServiceRepository.findOne({
+        where: {id: service.typeServiceId}
+      });
+      if(!verifyIdTypeService){
+        return{
+          ok: false,
+          msg: `Invalid TypeServiceId: ${service.typeServiceId}`
+        }
+      }
       this.serviceRepository.save(service);
       return {
         ok: true,

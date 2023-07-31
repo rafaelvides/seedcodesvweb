@@ -14,6 +14,15 @@ export class typeToolService {
 
   async createTypeTool(typeTool: createTypeToolDto) {
     try {
+      const typeToolFound = await this.getTypeToolByName(typeTool.type);
+      if (typeToolFound) {
+        if (typeTool.type === typeTool.type) {
+          return {
+            ok: false,
+            msg: `Name typeTool already exists ${typeTool.type}`,
+          };
+        }
+      }
       this.typeToolRepository.save(typeTool);
       return {
         ok: true,
@@ -90,6 +99,14 @@ export class typeToolService {
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
+  }
+
+  async getTypeToolByName(type: string) {
+    const typeToolFound = await this.typeToolRepository.findOne({
+      where: [{ type, isActive: true }],
+    });
+
+    return typeToolFound;
   }
 
   async deleteTypeTool(id: number) {
