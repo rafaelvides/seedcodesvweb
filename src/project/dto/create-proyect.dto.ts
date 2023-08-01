@@ -18,7 +18,7 @@ export class createProyectDto{
 
     @IsNumber()
     @IsNotEmpty()
-    typeId: number
+    typeProjectId: number
 
     @IsNumber()
     @IsNotEmpty()

@@ -17,10 +17,10 @@ export class Client {
     telephone: string
 
     @Column()
-    documentidentity: string
+    documentIdentity: string
 
     @Column({type: 'datetime' , default:() => 'CURRENT_TIMESTAMP'})
-    registrationdate: Date
+    registrationDate: Date
     
     @Column()
     email: string
@@ -29,10 +29,10 @@ export class Client {
     isActive: boolean
 
     @Column()
-    tipeId: number
+    typeClientId: number
 
    @ManyToOne(() => typeClient, typeclient => typeclient.clients)
-    tipe: typeClient
+    typeClient: typeClient
 
    @OneToMany(() => Proyect, proyect => proyect.client)
    proyects: Proyect[]

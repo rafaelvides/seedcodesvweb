@@ -13,7 +13,7 @@ import { createToolDto } from './dto/create-tool.dto';
 import { Tool } from './tool.entity';
 import { updateToolDto } from './dto/update-tool.dto';
 
-@Controller('ToolC')
+@Controller('Tool')
 export class toolController {
   constructor(private toolService: toolService) {}
 

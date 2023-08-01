@@ -3,7 +3,7 @@ export class CreateTypeClientDto {
 
     @IsString()
     @IsNotEmpty()
-    tipe: string
+    type: string
 
     isActive: boolean
 }

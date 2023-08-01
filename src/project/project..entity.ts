@@ -22,7 +22,7 @@ export class Proyect {
   description: string;
 
   @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
-  launchdate: Date;
+  launchDate: Date;
 
   @Column({ default: true })
   isActive: boolean;
@@ -31,7 +31,7 @@ export class Proyect {
   toolId: number;
 
   @Column()
-  typeId: number;
+  typeProjectId: number;
 
   @Column()
   clientId: number;
@@ -43,7 +43,7 @@ export class Proyect {
   tool: Tool;
 
   @ManyToOne(() => typeProject, (typeproyect) => typeproyect.proyects)
-  type: typeProject;
+  typeProject: typeProject;
 
   @ManyToOne(() => Client, (client) => client.proyects)
   client: Client;

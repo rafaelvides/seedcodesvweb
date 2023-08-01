@@ -13,7 +13,7 @@ import { createTypeProyectDto } from './dto/create-typeProject.dto';
 import { typeProject } from './typeProject.entity';
 import { updateTypeProjectDto } from './dto/update-typeProject.dto';
 
-@Controller('typeProjectC')
+@Controller('typeProject')
 export class typeProjectController {
   constructor(private typeProjectService: typeProjectService) {}
 

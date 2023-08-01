@@ -17,6 +17,15 @@ export class RoleService {
 
   async createRole(Role: createRoleDto) {
     try {
+      const projectFound = await this.getRoleByName(Role.rol);
+      if (projectFound) {
+        if (projectFound.rol === Role.rol) {
+          return {
+            ok: false,
+            msg: `Name role already exists ${Role.rol}`,
+          };
+        }
+      }
       this.RoleRepository.save(Role);
       return {
         ok: true,
@@ -93,10 +102,22 @@ export class RoleService {
     }
   }
 
+  async findByRoleId(id: number): Promise<Role | undefined> {
+    return this.RoleRepository.findOne({where: {id}});
+  }
+
+  async getRoleByName(rol: string) {
+    const projectFound = await this.RoleRepository.findOne({
+      where: [{ rol, isActive: true }],
+    });
+
+    return projectFound;
+  }
+
   async deleteRole(id: number) {
     try {
       const roleFound = await this.RoleRepository.findOne({
-        where: { isActive: true },
+        where: { id, isActive: true },
       });
       if (!roleFound) {
         return {

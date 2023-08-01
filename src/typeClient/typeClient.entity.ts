@@ -7,11 +7,11 @@ export class typeClient{
     id: number
 
     @Column()
-    tipe: string
+    type: string
 
     @Column({default: true})
     isActive: boolean
 
-    @OneToMany(() => Client, client => client.tipe)
+    @OneToMany(() => Client, client => client.typeClient)
     clients: Client[]
 }

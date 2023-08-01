@@ -13,7 +13,7 @@ import { createFileDto } from './dto/create-file.dto';
 import { File } from './file.entity';
 import { updateFileDto } from './dto/update-file.dto';
 
-@Controller('FileC')
+@Controller('File')
 export class fileController {
   constructor(private fileService: fileService) {}
 

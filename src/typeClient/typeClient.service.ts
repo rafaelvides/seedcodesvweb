@@ -13,6 +13,15 @@ export class typeClientService {
 
   async createTypeClient(typeClient: CreateTypeClientDto) {
     try {
+      const typeClientFound = await this.getTypeClienByName(typeClient.type);
+      if (typeClientFound) {
+        if (typeClientFound.type === typeClient.type) {
+          return {
+            ok: false,
+            msg: `Name typeClien already exists ${typeClient.type}`,
+          };
+        }
+      }
       this.typeClientRepository.save(typeClient);
       return {
         ok: true,
@@ -72,7 +81,7 @@ export class typeClientService {
       if (!typeclientFound) {
         return {
           ok: false,
-          mensaje: 'Type lient not found',
+          mensaje: 'Type client not found',
           status: HttpStatus.NOT_FOUND,
         };
       }
@@ -89,6 +98,14 @@ export class typeClientService {
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
+  }
+
+  async getTypeClienByName(type: string) {
+    const typeClientFound = await this.typeClientRepository.findOne({
+      where: [{ type, isActive: true }],
+    });
+
+    return typeClientFound;
   }
 
   async deleteTypeClient(id: number) {

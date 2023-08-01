@@ -67,6 +67,8 @@ dotenv.config();
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(AuthMiddleware).exclude('auth/login').forRoutes('*');
+    consumer
+      .apply(AuthMiddleware)
+      .forRoutes('User', 'File', 'typeTool', 'typeService', 'typeProject', 'typeClient', 'Tool', 'Service', 'Role', 'Project', 'Home', 'Folder', 'Client'); // Solo especificamos la ruta, sin el método HTTP
   }
 }

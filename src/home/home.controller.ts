@@ -13,7 +13,7 @@ import { createHomeDto } from './dto/create-home.dto';
 import { Home } from './home.entity';
 import { updateHomeDto } from './dto/update-home.dto';
 
-@Controller('HomeC')
+@Controller('Home')
 export class homeController {
   constructor(private homeService: homeService) {}
 

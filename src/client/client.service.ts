@@ -4,18 +4,20 @@ import { Client } from 'src/client/client.entity';
 import { Repository } from 'typeorm';
 import { CreateClientDto } from '../client/dto/create-client.dto';
 import { updateClientDto } from './dto/update-client.dto';
+import {typeClient} from '../typeClient/typeClient.entity'
 
 @Injectable()
 export class ClientService {
   constructor(
     @InjectRepository(Client) private clientRepository: Repository<Client>,
+    @InjectRepository(typeClient) private typeClientRepository: Repository<typeClient>
   ) {}
 
   async createClient(client: CreateClientDto) {
     try {
       const clientByEmail = await this.getClientByEmailOrDocumentIdentity(
         client.email,
-        client.documentidentity,
+        client.documentIdentity,
       );
 
       if (clientByEmail) {
@@ -24,11 +26,20 @@ export class ClientService {
             ok: false,
             msg: `Email already exists ${client.email}`,
           };
-        } else if (clientByEmail.documentidentity === client.documentidentity) {
+        } else if (clientByEmail.documentIdentity === client.documentIdentity) {
           return {
             ok: false,
-            msg: `DocumentIdentity already exists ${client.documentidentity}`,
+            msg: `DocumentIdentity already exists ${client.documentIdentity}`,
           };
+        }
+      }
+      const verifyIdTypeClient = await this.typeClientRepository.findOne({
+        where: {id: client.typeClientId}
+      });
+      if(!verifyIdTypeClient){
+        return{
+          ok: false,
+          msg: `Invalid TypeClientId: ${client.typeClientId}`
         }
       }
 
@@ -117,7 +128,7 @@ export class ClientService {
     const clientFound = await this.clientRepository.findOne({
       where: [
         { email, isActive: true },
-        { documentidentity: documentIdentity, isActive: true },
+        { documentIdentity: documentIdentity, isActive: true },
       ],
     });
     return clientFound;

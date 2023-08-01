@@ -12,15 +12,11 @@ import { ClientService } from '../client/client.service';
 import { CreateClientDto } from './dto/create-client.dto';
 import { Client } from './client.entity';
 import { updateClientDto } from './dto/update-client.dto';
-import {Roles} from '../auth/roles.decorator'
-
-@Roles('admin')
-@Controller('clients')
+@Controller('Client')
 export class ClientController {
   constructor(private clientService: ClientService) {}
 
   @Post()
-  @Roles('admin')
   createClient(@Body() newClient: CreateClientDto) {
     return this.clientService.createClient(newClient);
   }

@@ -4,15 +4,27 @@ import { Tool } from './tool.entity';
 import { Repository } from 'typeorm';
 import { createToolDto } from './dto/create-tool.dto';
 import { updateToolDto } from './dto/update-tool.dto';
+import { typeTool } from '../typeTool/typeTool.entity';
 
 @Injectable()
 export class toolService {
   constructor(
     @InjectRepository(Tool) private toolRepository: Repository<Tool>,
+    @InjectRepository(typeTool) private typeToolRepository: Repository<typeTool>,
   ) {}
 
   async createTool(tool: createToolDto) {
     try {
+      const verifyIdTypeTool = await this.typeToolRepository.findOne({
+        where: {id: tool.typeToolId}
+      });
+      if(!verifyIdTypeTool){
+        return{
+          ok: false,
+          msg: `Invalid typeTool Id: ${tool.typeToolId}`
+        }
+      }
+
       const ToolFound = await this.getToolByName(tool.name);
 
       if (!ToolFound) {

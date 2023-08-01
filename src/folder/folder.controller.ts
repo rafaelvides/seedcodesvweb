@@ -13,7 +13,7 @@ import { createFolderDto } from './dto/create-folder.dto';
 import { Folder } from './folder.entity';
 import { updateFolderDto } from './dto/update-folder.dto';
 
-@Controller('FolderC')
+@Controller('Folder')
 export class folderController {
   constructor(private folderSerice: folderService) {}
 

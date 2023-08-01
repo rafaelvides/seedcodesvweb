@@ -7,7 +7,7 @@ export class createServiceDto{
 
     @IsNumber()
     @IsNotEmpty()
-    typeId: number
+    typeServiceId: number
 
     isActive: boolean
 }

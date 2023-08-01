@@ -17,10 +17,10 @@ export class Tool {
     isActive: boolean
 
     @Column()
-    typeId: number
+    typeToolId: number
 
     @ManyToOne(() => typeTool, typetool => typetool.tools)
-    type: typeTool;
+    typeTool: typeTool;
 
     @OneToMany(() => Proyect, proyect => proyect.tool)
     projectjs: Proyect[]

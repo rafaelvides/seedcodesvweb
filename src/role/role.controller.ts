@@ -13,7 +13,7 @@ import { createRoleDto } from './dto/create-role.dto';
 import { Role } from './role.entity';
 import { updateRoleDto } from './dto/update-role.dto';
 
-@Controller('RoleC')
+@Controller('Role')
 export class roleController {
   constructor(private roleService: RoleService) {}
 
