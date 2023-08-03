@@ -1,8 +1,7 @@
-import {PrimaryGeneratedColumn, Entity, Column, OneToMany} from 'typeorm'
-import {Home} from '../home/home.entity'
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
-export class Contact{
+export class Interested{
     @PrimaryGeneratedColumn()
     id: number
 
@@ -10,9 +9,11 @@ export class Contact{
     name: string
 
     @Column()
+    cellphone: string
+
+    @Column('text')
     description: string
 
     @Column({ default: true })
     isActive: boolean
-
 }

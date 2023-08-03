@@ -10,6 +10,9 @@ export class File {
     file: string
 
     @Column()
+    extension: string
+
+    @Column()
     folderId: number
 
     @Column({ default: true })

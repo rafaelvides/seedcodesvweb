@@ -12,12 +12,7 @@ export class typeTool {
     @Column({default: true})
     isActive: boolean
 
-    @Column({type: 'datetime' , default:() => 'CURRENT_TIMESTAMP'})
-    launchDate: Date
-
     @OneToMany(() => Tool, tool => tool.typeTool)
     tools: Tool[]
-
-    
 
 }

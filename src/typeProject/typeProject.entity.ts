@@ -1,5 +1,5 @@
 import {PrimaryGeneratedColumn, Entity, Column, OneToMany} from 'typeorm'
-import {Proyect} from '../project/project..entity'
+import {Proyect} from '../project/project.entity'
 
 @Entity()
 export class typeProject{

@@ -1,5 +1,4 @@
-import {PrimaryGeneratedColumn, Entity, Column, ManyToOne} from 'typeorm'
-import {Contact} from '../contact/contact.entity'
+import {PrimaryGeneratedColumn, Entity, Column } from 'typeorm'
 
 @Entity()
 export class Home{
@@ -16,20 +15,9 @@ export class Home{
     vision: string
 
     @Column()
-    values: string
-
-    @Column()
     imag: string
-
-    @Column()
-    service: string
-
-    @Column()
-    contactId: number
 
     @Column({default: true})
     isActive: boolean
 
-    @ManyToOne(() => Contact, contact => contact.homes)
-    contact: Contact
 }

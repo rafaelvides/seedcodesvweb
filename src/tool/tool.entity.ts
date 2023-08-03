@@ -1,6 +1,6 @@
 import {PrimaryGeneratedColumn, Entity, Column, ManyToOne, OneToMany} from 'typeorm'
 import {typeTool} from '../typeTool/typeTool.entity'
-import {Proyect} from '../project/project..entity'
+import {Proyect} from '../project/project.entity'
 
 @Entity()
 export class Tool {

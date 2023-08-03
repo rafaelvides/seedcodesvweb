@@ -13,5 +13,5 @@ export class Role{
     isActive: boolean
     
     @OneToMany(() => User, user => user.Role)
-     users: User[]
+    users: User[]
 }

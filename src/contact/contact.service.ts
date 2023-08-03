@@ -13,18 +13,6 @@ export class ContactService {
 
   async createContact(contact: createContactDto) {
     try {
-      const contactFound = await this.contactRepository.findOne({
-        where: {
-          typeContact: contact.typeContact,
-        },
-      });
-
-      if (contactFound) {
-        return {
-          ok: false,
-          msg: `typeContact already exists ${contact.typeContact}`,
-        };
-      }
 
       this.contactRepository.save(contact);
       return {

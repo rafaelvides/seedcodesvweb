@@ -3,7 +3,6 @@ import {
   Entity,
   Column,
   ManyToOne,
-  OneToMany,
 } from 'typeorm';
 import { Tool } from '../tool/tool.entity';
 import { typeProject } from '../typeProject/typeProject.entity';

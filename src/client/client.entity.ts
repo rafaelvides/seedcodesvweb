@@ -1,6 +1,6 @@
 import { typeClient } from '../typeClient/typeClient.entity'
 import {Column,Entity, ManyToOne, PrimaryGeneratedColumn, OneToMany} from 'typeorm'
-import {Proyect} from '../project/project..entity'
+import {Proyect} from '../project/project.entity'
 
 @Entity()
 export class Client {
