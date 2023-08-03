@@ -1,6 +1,6 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Proyect } from '../project/project..entity';
+import { Proyect } from './project.entity';
 import { Repository } from 'typeorm';
 import { createProyectDto } from './dto/create-proyect.dto';
 import { updateProjectDto } from './dto/update-project.dto';

@@ -24,14 +24,4 @@ export class createHomeDto{
 
     isActive: boolean
 
-
-    @IsString()
-    @IsNotEmpty()
-    service: string
-
-    @IsNumber()
-    @IsNotEmpty()
-    @IsInt()
-    contactId: number
-
 }
