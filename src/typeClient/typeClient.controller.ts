@@ -12,6 +12,8 @@ import { CreateTypeClientDto } from './dto/create-typeClient.dto';
 import { typeClientService } from './typeClient.service';
 import { typeClient } from './typeClient.entity';
 import { updateTypeClientDto } from './dto/update-typeClient.dto';
+import { Auth } from 'src/auth/decorators';
+import { ValidRoles } from 'src/auth/interfaces';
 
 @Controller('typeClient')
 export class typeClientController {
@@ -31,16 +33,19 @@ export class typeClientController {
   }
 
   @Get(':id')
+  @Auth(ValidRoles.admin)
   getTypeClient(@Param('id', ParseIntPipe) id: number) {
     return this.typeclientService.gettypeClient(id);
   }
 
   @Delete(':id')
+  @Auth(ValidRoles.admin)
   deleteTypeClient(@Param('id', ParseIntPipe) id: number) {
     return this.typeclientService.deleteTypeClient(id);
   }
 
   @Put(':id')
+  @Auth(ValidRoles.admin)
   updateTypeClient(
     @Param('id', ParseIntPipe) id: number,
     @Body() typeClient: updateTypeClientDto,

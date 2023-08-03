@@ -12,6 +12,8 @@ import { fileService } from './file.service';
 import { createFileDto } from './dto/create-file.dto';
 import { File } from './file.entity';
 import { updateFileDto } from './dto/update-file.dto';
+import { Auth } from 'src/auth/decorators';
+import { ValidRoles } from 'src/auth/interfaces';
 
 @Controller('File')
 export class fileController {
@@ -23,6 +25,7 @@ export class fileController {
   }
 
   @Get()
+  @Auth(ValidRoles.admin)
   async getClients(): Promise<
     { ok: boolean; files: File[]; msg?: string } | { ok: boolean; msg: string }
   > {
@@ -30,16 +33,19 @@ export class fileController {
   }
 
   @Get(':id')
+  @Auth(ValidRoles.admin)
   getFile(@Param('id', ParseIntPipe) id: number) {
     return this.fileService.getFile(id);
   }
 
   @Delete(':id')
+  @Auth(ValidRoles.admin)
   deleteFile(@Param('id', ParseIntPipe) id: number) {
     return this.fileService.deleteFile(id);
   }
 
   @Put(':id')
+  @Auth(ValidRoles.admin)
   updateFile(
     @Param('id', ParseIntPipe) id: number,
     @Body() file: updateFileDto,

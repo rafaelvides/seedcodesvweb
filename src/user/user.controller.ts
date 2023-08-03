@@ -12,6 +12,8 @@ import { userService } from './user.service';
 import { createUserDto } from './dto/create-user.dto';
 import { User } from './user.entity';
 import { updateUserDto } from './dto/update-user.dto';
+import { Auth } from 'src/auth/decorators';
+import { ValidRoles } from 'src/auth/interfaces';
 
 @Controller('User')
 export class userController {
@@ -23,6 +25,7 @@ export class userController {
   }
 
   @Get()
+  @Auth(ValidRoles.admin)
   getUsers(): Promise<
     { ok: boolean; users: User[]; msg?: string } | { ok: boolean; msg: string }
   > {
@@ -30,16 +33,19 @@ export class userController {
   }
 
   @Get(':id')
+  @Auth(ValidRoles.admin)
   getUser(@Param('id', ParseIntPipe) id: number) {
     return this.userService.getUser(id);
   }
 
   @Delete(':id')
+  @Auth(ValidRoles.admin)
   deleteClient(@Param('id', ParseIntPipe) id: number) {
     return this.userService.deleteUser(id);
   }
 
   @Put(':id')
+  @Auth(ValidRoles.admin)
   updateUser(
     @Param('id', ParseIntPipe) id: number,
     @Body() user: updateUserDto,

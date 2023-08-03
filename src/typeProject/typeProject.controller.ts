@@ -12,6 +12,8 @@ import { typeProjectService } from './typeProject.Service';
 import { createTypeProyectDto } from './dto/create-typeProject.dto';
 import { typeProject } from './typeProject.entity';
 import { updateTypeProjectDto } from './dto/update-typeProject.dto';
+import { Auth } from 'src/auth/decorators';
+import { ValidRoles } from 'src/auth/interfaces';
 
 @Controller('typeProject')
 export class typeProjectController {
@@ -31,16 +33,19 @@ export class typeProjectController {
   }
 
   @Get(':id')
+  @Auth(ValidRoles.admin)
   getTypeProject(@Param('id', ParseIntPipe) id: number) {
     return this.typeProjectService.getTypeProject(id);
   }
 
   @Delete(':id')
+  @Auth(ValidRoles.admin)
   deleteTypeProject(@Param('id', ParseIntPipe) id: number) {
     return this.typeProjectService.deleteTypeProject(id);
   }
 
   @Put(':id')
+  @Auth(ValidRoles.admin)
   updateTypeProject(
     @Param('id', ParseIntPipe) id: number,
     @Body() typeProject: updateTypeProjectDto,

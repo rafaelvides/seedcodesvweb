@@ -12,6 +12,8 @@ import { typeToolService } from './typeTool.service';
 import { createTypeToolDto } from './dto/create-typeTool.dto';
 import { typeTool } from './typeTool.entity';
 import { updateTypeToolDto } from './dto/update-typeTool.dto';
+import { Auth } from 'src/auth/decorators';
+import { ValidRoles } from 'src/auth/interfaces';
 
 @Controller('typeTool')
 export class typeToolController {
@@ -31,16 +33,19 @@ export class typeToolController {
   }
 
   @Get(':id')
+  @Auth(ValidRoles.admin)
   getTypeTool(@Param('id', ParseIntPipe) id: number) {
     return this.typeToolService.gettypeTool(id);
   }
 
   @Delete('id:')
+  @Auth(ValidRoles.admin)
   deleteTypeTool(@Param('id', ParseIntPipe) id: number) {
     return this.typeToolService.deleteTypeTool(id);
   }
 
   @Put(':id')
+  @Auth(ValidRoles.admin)
   updateTool(
     @Param('id', ParseIntPipe) id: number,
     @Body() tool: updateTypeToolDto,

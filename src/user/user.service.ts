@@ -139,7 +139,10 @@ export class userService {
   }
 
   async findByUsername(email: string): Promise<User | null> {
-    return this.userRepository.findOne({ where: { email } });
+    return this.userRepository.findOne({ 
+      relations: {Role: true},
+    
+      where: { email } });
   }
 
   async deleteUser(id: number) {

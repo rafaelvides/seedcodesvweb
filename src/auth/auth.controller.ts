@@ -1,7 +1,10 @@
-import { Controller, Post, Request, UseGuards } from '@nestjs/common';
+import { Controller, Post, Request, UseGuards, Get} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
-
+import { User } from '../user/user.entity';
+import { GetUser } from './decorators/get-user.decorator';
+import { ValidRoles } from './interfaces';
+import { Auth } from './decorators';
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
@@ -17,4 +20,16 @@ export class AuthController {
   async protectedRoute(): Promise<any> {
     return 'Has accedido a una ruta protegida';
   }
+
+  @Get('private2')
+  @Auth(ValidRoles.admin)
+  privateRoute2 (
+    @GetUser() user: User
+  ){
+    return{
+      ok: true,
+      user
+    }
+  }
+  
 }

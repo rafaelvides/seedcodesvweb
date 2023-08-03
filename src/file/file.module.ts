@@ -5,9 +5,10 @@ import {fileController} from './file.controller'
 import {fileService} from "./file.service";
 import {FolderModule} from "../folder/folder.module";
 import { Folder } from "src/folder/folder.entity";
+import { AuthModule } from "src/auth/auth.module";
 
 @Module ({
-    imports: [TypeOrmModule.forFeature([File, Folder]), FolderModule],
+    imports: [TypeOrmModule.forFeature([File, Folder]), FolderModule, AuthModule],
     controllers: [fileController],
     providers: [fileService],
     

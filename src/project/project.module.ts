@@ -8,9 +8,10 @@ import { Tool } from "src/tool/tool.entity";
 import { typeProject } from "src/typeProject/typeProject.entity";
 import { User } from "src/user/user.entity";
 import { Client } from "src/client/client.entity";
+import { AuthModule } from "src/auth/auth.module";
 
 @Module ({
-    imports: [TypeOrmModule.forFeature([Proyect, Tool, typeProject, User, Client]), typeProjectModule],
+    imports: [TypeOrmModule.forFeature([Proyect, Tool, typeProject, User, Client]), typeProjectModule, AuthModule],
     controllers: [projectController],
     providers: [projectService],
     

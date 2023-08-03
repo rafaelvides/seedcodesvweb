@@ -12,6 +12,8 @@ import { homeService } from './home.service';
 import { createHomeDto } from './dto/create-home.dto';
 import { Home } from './home.entity';
 import { updateHomeDto } from './dto/update-home.dto';
+import { Auth } from 'src/auth/decorators';
+import { ValidRoles } from 'src/auth/interfaces';
 
 @Controller('Home')
 export class homeController {
@@ -30,16 +32,19 @@ export class homeController {
   }
 
   @Get(':id')
+  @Auth(ValidRoles.admin)
   getHome(@Param('id', ParseIntPipe) id: number) {
     return this.homeService.getHome(id);
   }
 
   @Delete(':id')
+  @Auth(ValidRoles.admin)
   deleteHome(@Param('id', ParseIntPipe) id: number) {
     return this.homeService.deleteHome(id);
   }
 
   @Put(':id')
+  @Auth(ValidRoles.admin)
   updateHome(
     @Param('id', ParseIntPipe) id: number,
     @Body() home: updateHomeDto,

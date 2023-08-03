@@ -12,6 +12,8 @@ import { typeServiceService } from './typeService.service';
 import { createTypeServiceDto } from './dto/create-typeService.dto';
 import { typeService } from './typeService.entity';
 import { updateTypeServiceDto } from './dto/update-typeService.dto';
+import { Auth } from 'src/auth/decorators';
+import { ValidRoles } from 'src/auth/interfaces';
 
 @Controller('typeService')
 export class typeServiceController {
@@ -31,6 +33,7 @@ export class typeServiceController {
   }
 
   @Get(':id')
+  @Auth(ValidRoles.admin)
   getTypeService(@Param('id', ParseIntPipe) id: number) {
     return this.typeServiceService.gettypeService(id);
   }

@@ -5,10 +5,10 @@ import { ClientController} from './client.controller'
 import { ClientService } from "./client.service"
 import { typeClientModule } from "src/typeClient/typeClient.module";
 import { typeClient } from "src/typeClient/typeClient.entity";
+import { AuthModule } from "../auth/auth.module";
 @Module ({
-    imports: [TypeOrmModule.forFeature([Client, typeClient]), typeClientModule],
+    imports: [TypeOrmModule.forFeature([Client, typeClient]), typeClientModule, AuthModule],
     controllers: [ClientController],
-    providers: [ClientService],
-    
+    providers: [ClientService],    
 })
 export class ClientModule{}

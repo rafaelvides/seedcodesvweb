@@ -22,7 +22,7 @@ import { JwtModule } from '@nestjs/jwt';
 import {Role} from './role/role.entity'
 import * as dotenv from 'dotenv'; 
 import { APP_GUARD } from '@nestjs/core';
-import {RolesGuard} from './auth/roles.guard'
+import { UserRoleGuard } from './auth/guards/user-role/user-role.guard';
 
 dotenv.config();
 @Module({
@@ -59,11 +59,8 @@ dotenv.config();
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService,
-    {
-      provide: APP_GUARD,
-      useClass: RolesGuard,
-    },],
+  providers: [AppService]
+    
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
