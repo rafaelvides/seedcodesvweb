@@ -20,11 +20,13 @@ export class toolController {
   constructor(private toolService: toolService) {}
 
   @Post()
+  @Auth(ValidRoles.admin)
   createTool(@Body() newTool: createToolDto) {
     return this.toolService.createTool(newTool);
   }
 
   @Get()
+  @Auth(ValidRoles.admin)
   getTools(): Promise<
     { ok: boolean; tools: Tool[]; msg?: string } | { ok: boolean; msg: string }
   > {

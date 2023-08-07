@@ -20,11 +20,13 @@ export class typeProjectController {
   constructor(private typeProjectService: typeProjectService) {}
 
   @Post()
+  @Auth(ValidRoles.admin)
   createTypeProject(@Body() newTypeProject: createTypeProyectDto) {
     return this.typeProjectService.createTypeProyect(newTypeProject);
   }
 
   @Get()
+  @Auth(ValidRoles.admin)
   getTypeProjects(): Promise<
     | { ok: boolean; typeProjects: typeProject[]; msg?: string }
     | { ok: boolean; msg: string }

@@ -20,6 +20,7 @@ export class userController {
   constructor(private userService: userService) {}
 
   @Post()
+  @Auth(ValidRoles.admin)
   createUser(@Body() newUser: createUserDto) {
     return this.userService.createUser(newUser);
   }

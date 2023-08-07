@@ -20,11 +20,13 @@ export class typeToolController {
   constructor(private typeToolService: typeToolService) {}
 
   @Post()
+  @Auth(ValidRoles.admin)
   createTypeTool(@Body() newtypeTool: createTypeToolDto) {
     return this.typeToolService.createTypeTool(newtypeTool);
   }
 
   @Get()
+  @Auth(ValidRoles.admin)
   getTypeTools(): Promise<
     | { ok: boolean; typeTools: typeTool[]; msg?: string }
     | { ok: boolean; msg: string }

@@ -20,6 +20,7 @@ export class ClientController {
   constructor(private clientService: ClientService) {}
 
   @Post()
+  @Auth(ValidRoles.admin)
   createClient(@Body() newClient: CreateClientDto) {
     return this.clientService.createClient(newClient);
   }

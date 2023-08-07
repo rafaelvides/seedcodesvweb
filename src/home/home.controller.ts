@@ -20,11 +20,13 @@ export class homeController {
   constructor(private homeService: homeService) {}
 
   @Post()
+  @Auth(ValidRoles.admin)
   createHome(@Body() newHome: createHomeDto) {
     return this.homeService.createHome(newHome);
   }
 
   @Get()
+  @Auth(ValidRoles.admin)
   async getContacts(): Promise<
     { ok: boolean; homes: Home[]; msg?: string } | { ok: boolean; msg: string }
   > {

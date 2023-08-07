@@ -20,11 +20,13 @@ export class projectController {
   constructor(private projectService: projectService) {}
 
   @Post()
+  @Auth(ValidRoles.admin)
   createProject(@Body() newProject: createProyectDto) {
     return this.projectService.createProject(newProject);
   }
 
   @Get()
+  @Auth(ValidRoles.admin)
   getProjects(): Promise<
     | { ok: boolean; projects: Proyect[]; msg?: string }
     | { ok: boolean; msg: string }

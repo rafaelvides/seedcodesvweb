@@ -20,11 +20,13 @@ export class folderController {
   constructor(private folderSerice: folderService) {}
 
   @Post()
+  @Auth(ValidRoles.admin)
   createFolder(@Body() newFolder: createFolderDto) {
     return this.folderSerice.createFolder(newFolder);
   }
 
   @Get()
+  @Auth(ValidRoles.admin)
   async getFolders(): Promise<
     | { ok: boolean; folders: Folder[]; msg?: string }
     | { ok: boolean; msg: string }

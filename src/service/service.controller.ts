@@ -15,16 +15,18 @@ import { updateServiceDto } from './dto/update-service.dto';
 import { Auth } from 'src/auth/decorators';
 import { ValidRoles } from 'src/auth/interfaces';
 
-@Controller('ServiceC')
+@Controller('Service')
 export class serviceController {
   constructor(private serviceService: serviceService) {}
 
   @Post()
+  @Auth(ValidRoles.admin)
   createService(@Body() newService: createServiceDto) {
     return this.serviceService.createService(newService);
   }
 
   @Get()
+  @Auth(ValidRoles.admin)
   getServices(): Promise<
     | { ok: boolean; services: Service[]; msg?: string }
     | { ok: boolean; msg: string }

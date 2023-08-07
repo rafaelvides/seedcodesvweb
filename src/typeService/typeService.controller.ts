@@ -20,11 +20,13 @@ export class typeServiceController {
   constructor(private typeServiceService: typeServiceService) {}
 
   @Post()
+  @Auth(ValidRoles.admin)
   createTypeService(@Body() newtypeService: createTypeServiceDto) {
     return this.typeServiceService.createTypeService(newtypeService);
   }
 
   @Get()
+  @Auth(ValidRoles.admin)
   getTypeServices(): Promise<
     | { ok: boolean; typeServices: typeService[]; msg?: string }
     | { ok: boolean; msg: string }

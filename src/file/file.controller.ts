@@ -14,12 +14,12 @@ import { File } from './file.entity';
 import { updateFileDto } from './dto/update-file.dto';
 import { Auth } from 'src/auth/decorators';
 import { ValidRoles } from 'src/auth/interfaces';
-
 @Controller('File')
 export class fileController {
   constructor(private fileService: fileService) {}
 
   @Post()
+  @Auth(ValidRoles.admin)
   createFile(@Body() newFile: createFileDto) {
     return this.fileService.createFile(newFile);
   }
