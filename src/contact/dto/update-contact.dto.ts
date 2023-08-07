@@ -1,4 +1,4 @@
-export class updateContactDto{
-    description: string
-    typeContact: string
+export class updateContactDto {
+  description: string
+  typeContact: string
 }

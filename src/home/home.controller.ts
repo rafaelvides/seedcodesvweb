@@ -7,13 +7,13 @@ import {
   ParseIntPipe,
   Delete,
   Put,
-} from '@nestjs/common';
-import { homeService } from './home.service';
-import { createHomeDto } from './dto/create-home.dto';
-import { Home } from './home.entity';
-import { updateHomeDto } from './dto/update-home.dto';
-import { Auth } from 'src/auth/decorators';
-import { ValidRoles } from 'src/auth/interfaces';
+} from '@nestjs/common'
+import { homeService } from './home.service'
+import { createHomeDto } from './dto/create-home.dto'
+import { Home } from './home.entity'
+import { updateHomeDto } from './dto/update-home.dto'
+import { Auth } from 'src/auth/decorators'
+import { ValidRoles } from 'src/auth/interfaces'
 
 @Controller('Home')
 export class homeController {
@@ -22,7 +22,7 @@ export class homeController {
   @Post()
   @Auth(ValidRoles.admin)
   createHome(@Body() newHome: createHomeDto) {
-    return this.homeService.createHome(newHome);
+    return this.homeService.createHome(newHome)
   }
 
   @Get()
@@ -30,27 +30,27 @@ export class homeController {
   async getContacts(): Promise<
     { ok: boolean; homes: Home[]; msg?: string } | { ok: boolean; msg: string }
   > {
-    return this.homeService.getHomes();
+    return this.homeService.getHomes()
   }
 
   @Get(':id')
   @Auth(ValidRoles.admin)
   getHome(@Param('id', ParseIntPipe) id: number) {
-    return this.homeService.getHome(id);
+    return this.homeService.getHome(id)
   }
 
   @Delete(':id')
   @Auth(ValidRoles.admin)
   deleteHome(@Param('id', ParseIntPipe) id: number) {
-    return this.homeService.deleteHome(id);
+    return this.homeService.deleteHome(id)
   }
 
   @Put(':id')
   @Auth(ValidRoles.admin)
   updateHome(
     @Param('id', ParseIntPipe) id: number,
-    @Body() home: updateHomeDto,
+    @Body() home: updateHomeDto
   ) {
-    return this.homeService.updateHome(id, home);
+    return this.homeService.updateHome(id, home)
   }
 }

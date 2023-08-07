@@ -1,18 +1,17 @@
-import {PrimaryGeneratedColumn, Entity, Column, OneToMany} from 'typeorm'
-import {Proyect} from '../project/project.entity'
+import { PrimaryGeneratedColumn, Entity, Column, OneToMany } from 'typeorm'
+import { Proyect } from '../project/project.entity'
 
 @Entity()
-export class typeProject{
+export class typeProject {
+  @PrimaryGeneratedColumn()
+  id: number
 
-    @PrimaryGeneratedColumn()
-    id: number
+  @Column()
+  type: string
 
-    @Column()
-    type: string
+  @Column({ default: true })
+  isActive: boolean
 
-    @Column({ default: true })
-    isActive: boolean
-
-    @OneToMany(() => Proyect, proyect => proyect.typeProject)
-    proyects: Proyect[]
+  @OneToMany(() => Proyect, proyect => proyect.typeProject)
+  proyects: Proyect[]
 }

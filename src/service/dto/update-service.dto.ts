@@ -1,3 +1,3 @@
-export class updateServiceDto{
-    payment: number
+export class updateServiceDto {
+  payment: number
 }

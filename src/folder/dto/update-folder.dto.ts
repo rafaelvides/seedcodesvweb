@@ -1,4 +1,4 @@
-export class updateFolderDto{
-    path: string
-    name: string
+export class updateFolderDto {
+  path: string
+  name: string
 }

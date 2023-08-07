@@ -1,17 +1,16 @@
-import {IsString, IsNotEmpty, IsNumber} from 'class-validator';
-export class createToolDto{
+import { IsString, IsNotEmpty, IsNumber } from 'class-validator'
+export class createToolDto {
+  @IsString()
+  @IsNotEmpty()
+  name: string
 
-    @IsString()
-    @IsNotEmpty()
-    name: string
+  @IsString()
+  @IsNotEmpty()
+  description: string
 
-    @IsString()
-    @IsNotEmpty()
-    description: string
+  @IsNumber()
+  @IsNotEmpty()
+  typeToolId: number
 
-    @IsNumber()
-    @IsNotEmpty()
-    typeToolId: number
-
-    isActive: boolean
+  isActive: boolean
 }

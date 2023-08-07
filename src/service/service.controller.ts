@@ -7,13 +7,13 @@ import {
   ParseIntPipe,
   Delete,
   Put,
-} from '@nestjs/common';
-import { serviceService } from './service.service';
-import { createServiceDto } from './dto/create-service.dto';
-import { Service } from './service.entity';
-import { updateServiceDto } from './dto/update-service.dto';
-import { Auth } from 'src/auth/decorators';
-import { ValidRoles } from 'src/auth/interfaces';
+} from '@nestjs/common'
+import { serviceService } from './service.service'
+import { createServiceDto } from './dto/create-service.dto'
+import { Service } from './service.entity'
+import { updateServiceDto } from './dto/update-service.dto'
+import { Auth } from 'src/auth/decorators'
+import { ValidRoles } from 'src/auth/interfaces'
 
 @Controller('Service')
 export class serviceController {
@@ -22,7 +22,7 @@ export class serviceController {
   @Post()
   @Auth(ValidRoles.admin)
   createService(@Body() newService: createServiceDto) {
-    return this.serviceService.createService(newService);
+    return this.serviceService.createService(newService)
   }
 
   @Get()
@@ -31,27 +31,27 @@ export class serviceController {
     | { ok: boolean; services: Service[]; msg?: string }
     | { ok: boolean; msg: string }
   > {
-    return this.serviceService.getServices();
+    return this.serviceService.getServices()
   }
 
   @Get(':id')
   @Auth(ValidRoles.admin)
   getService(@Param('id', ParseIntPipe) id: number) {
-    return this.serviceService.getService(id);
+    return this.serviceService.getService(id)
   }
 
   @Delete(':id')
   @Auth(ValidRoles.admin)
   deleteService(@Param('id', ParseIntPipe) id: number) {
-    return this.serviceService.deleteService(id);
+    return this.serviceService.deleteService(id)
   }
 
   @Put(':id')
   @Auth(ValidRoles.admin)
   updateService(
     @Param('id', ParseIntPipe) id: number,
-    @Body() service: updateServiceDto,
+    @Body() service: updateServiceDto
   ) {
-    return this.serviceService.updateService(id, service);
+    return this.serviceService.updateService(id, service)
   }
 }

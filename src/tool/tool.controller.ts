@@ -7,13 +7,13 @@ import {
   ParseIntPipe,
   Delete,
   Put,
-} from '@nestjs/common';
-import { toolService } from './tool.service';
-import { createToolDto } from './dto/create-tool.dto';
-import { Tool } from './tool.entity';
-import { updateToolDto } from './dto/update-tool.dto';
-import { Auth } from 'src/auth/decorators';
-import { ValidRoles } from 'src/auth/interfaces';
+} from '@nestjs/common'
+import { toolService } from './tool.service'
+import { createToolDto } from './dto/create-tool.dto'
+import { Tool } from './tool.entity'
+import { updateToolDto } from './dto/update-tool.dto'
+import { Auth } from 'src/auth/decorators'
+import { ValidRoles } from 'src/auth/interfaces'
 
 @Controller('Tool')
 export class toolController {
@@ -22,7 +22,7 @@ export class toolController {
   @Post()
   @Auth(ValidRoles.admin)
   createTool(@Body() newTool: createToolDto) {
-    return this.toolService.createTool(newTool);
+    return this.toolService.createTool(newTool)
   }
 
   @Get()
@@ -30,27 +30,27 @@ export class toolController {
   getTools(): Promise<
     { ok: boolean; tools: Tool[]; msg?: string } | { ok: boolean; msg: string }
   > {
-    return this.toolService.getTools();
+    return this.toolService.getTools()
   }
 
   @Get(':id')
   @Auth(ValidRoles.admin)
   getTool(@Param('id', ParseIntPipe) id: number) {
-    return this.toolService.getTool(id);
+    return this.toolService.getTool(id)
   }
 
   @Delete(':id')
   @Auth(ValidRoles.admin)
   deleteTool(@Param('id', ParseIntPipe) id: number) {
-    return this.toolService.deleteTool(id);
+    return this.toolService.deleteTool(id)
   }
 
   @Put(':id')
   @Auth(ValidRoles.admin)
   updateTool(
     @Param('id', ParseIntPipe) id: number,
-    @Body() tool: updateToolDto,
+    @Body() tool: updateToolDto
   ) {
-    return this.toolService.updateTool(id, tool);
+    return this.toolService.updateTool(id, tool)
   }
 }

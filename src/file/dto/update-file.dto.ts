@@ -1,3 +1,3 @@
-export class updateFileDto{
-    file: string
+export class updateFileDto {
+  file: string
 }

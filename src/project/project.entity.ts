@@ -1,52 +1,47 @@
-import {
-  PrimaryGeneratedColumn,
-  Entity,
-  Column,
-  ManyToOne,
-} from 'typeorm';
-import { Tool } from '../tool/tool.entity';
-import { typeProject } from '../typeProject/typeProject.entity';
-import { Client } from '../client/client.entity';
-import { User } from '../user/user.entity';
+import { PrimaryGeneratedColumn, Entity, Column, ManyToOne } from 'typeorm'
+import { Tool } from '../tool/tool.entity'
+import { typeProject } from '../typeProject/typeProject.entity'
+import { Client } from '../client/client.entity'
+import { User } from '../user/user.entity'
 
 @Entity()
 export class Proyect {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: number
 
   @Column()
-  nameProyect: string;
+  nameProyect: string
 
   @Column()
-  description: string;
+  description: string
 
   @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
-  launchDate: Date;
+  launchDate: Date
 
   @Column({ default: true })
-  isActive: boolean;
+  isActive: boolean
 
   @Column()
-  toolId: number;
+  toolId: number
 
   @Column()
-  typeProjectId: number;
+  typeProjectId: number
 
   @Column()
-  clientId: number;
+  clientId: number
 
   @Column()
-  userId: number;
+  userId: number
 
   @ManyToOne(() => Tool, tool => tool.projectjs)
-  tool: Tool;
+  tool: Tool
 
-  @ManyToOne(() => typeProject, (typeproyect) => typeproyect.proyects)
-  typeProject: typeProject;
+  @ManyToOne(() => typeProject, typeproyect => typeproyect.proyects)
+  typeProject: typeProject
 
-  @ManyToOne(() => Client, (client) => client.proyects)
-  client: Client;
+  @ManyToOne(() => Client, client => client.proyects)
+  client: Client
 
-  @ManyToOne(() => User, (user) => user.proyects)
-  user: User;
+  @ManyToOne(() => User, user => user.proyects)
+  user: User
 }

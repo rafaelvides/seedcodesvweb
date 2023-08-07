@@ -1,30 +1,30 @@
-import { Module, MiddlewareConsumer } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { ClientModule } from './client/client.module';
-import { typeClientModule } from './typeClient/typeClient.module';
-import { ContactModule } from './contact/contact.module';
-import { HomeModule } from './home/home.module';
-import { ServiceModule } from './service/service.module';
-import { typeServiceModule } from './typeService/typeService.module';
-import { FileModule } from './file/file.module';
-import { FolderModule } from './folder/folder.module';
-import { typeProjectModule } from './typeProject/typeProject.module';
-import { ProyectModule } from './project/project.module';
-import { ToolModule } from './tool/tool.module';
-import { typeToolModule } from './typeTool/typeTool.module';
-import { RoleModule } from './role/role.module';
-import { UserModule } from './user/user.module';
-import { AuthModule } from './auth/auth.module';
-import { AuthMiddleware } from './auth/auth.middleware';
-import { JwtModule } from '@nestjs/jwt';
-import {Role} from './role/role.entity'
-import * as dotenv from 'dotenv'; 
-import { APP_GUARD } from '@nestjs/core';
-import { UserRoleGuard } from './auth/guards/user-role/user-role.guard';
+import { Module, MiddlewareConsumer } from '@nestjs/common'
+import { AppController } from './app.controller'
+import { AppService } from './app.service'
+import { TypeOrmModule } from '@nestjs/typeorm'
+import { ClientModule } from './client/client.module'
+import { typeClientModule } from './typeClient/typeClient.module'
+import { ContactModule } from './contact/contact.module'
+import { HomeModule } from './home/home.module'
+import { ServiceModule } from './service/service.module'
+import { typeServiceModule } from './typeService/typeService.module'
+import { FileModule } from './file/file.module'
+import { FolderModule } from './folder/folder.module'
+import { typeProjectModule } from './typeProject/typeProject.module'
+import { ProyectModule } from './project/project.module'
+import { ToolModule } from './tool/tool.module'
+import { typeToolModule } from './typeTool/typeTool.module'
+import { RoleModule } from './role/role.module'
+import { UserModule } from './user/user.module'
+import { AuthModule } from './auth/auth.module'
+import { AuthMiddleware } from './auth/auth.middleware'
+import { JwtModule } from '@nestjs/jwt'
+import { Role } from './role/role.entity'
+import * as dotenv from 'dotenv'
+import { APP_GUARD } from '@nestjs/core'
+import { UserRoleGuard } from './auth/guards/user-role/user-role.guard'
 
-dotenv.config();
+dotenv.config()
 @Module({
   imports: [
     JwtModule.register({
@@ -59,13 +59,26 @@ dotenv.config();
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService]
-    
+  providers: [AppService],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(AuthMiddleware)
-      .forRoutes('User', 'File', 'typeTool', 'typeService', 'typeProject', 'typeClient', 'Tool', 'Service', 'Role', 'Project', 'Home', 'Folder', 'Client'); // Solo especificamos la ruta, sin el método HTTP
+      .forRoutes(
+        'User',
+        'File',
+        'typeTool',
+        'typeService',
+        'typeProject',
+        'typeClient',
+        'Tool',
+        'Service',
+        'Role',
+        'Project',
+        'Home',
+        'Folder',
+        'Client'
+      ) // Solo especificamos la ruta, sin el método HTTP
   }
 }

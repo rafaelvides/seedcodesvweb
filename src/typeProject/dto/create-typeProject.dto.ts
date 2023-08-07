@@ -1,9 +1,8 @@
-import {IsString, IsNotEmpty} from 'class-validator';
-export class createTypeProyectDto{
+import { IsString, IsNotEmpty } from 'class-validator'
+export class createTypeProyectDto {
+  @IsString()
+  @IsNotEmpty()
+  type: string
 
-    @IsString()
-    @IsNotEmpty()
-    type: string
-
-    isActive: boolean
+  isActive: boolean
 }

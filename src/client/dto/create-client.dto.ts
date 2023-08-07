@@ -1,34 +1,42 @@
-import { IsString, IsNotEmpty, MinLength, IsNumber, IsEmail, Validate, IsPhoneNumber} from 'class-validator';
-import {ValidatorDUI} from 'src/validation/validationDUI'
+import {
+  IsString,
+  IsNotEmpty,
+  MinLength,
+  IsNumber,
+  IsEmail,
+  Validate,
+  IsPhoneNumber,
+} from 'class-validator'
+import { ValidatorDUI } from 'src/validation/validationDUI'
 
 export class CreateClientDto {
   @IsString()
   @IsNotEmpty()
   @MinLength(3)
-  firsname: string;
+  firsname: string
 
   @IsString()
   @IsNotEmpty()
   @MinLength(3)
-  lastname: string;
-  
+  lastname: string
+
   @IsNotEmpty()
   @IsPhoneNumber()
-  telephone: string;
+  telephone: string
 
-  @IsString() 
+  @IsString()
   @IsNotEmpty()
   @Validate(ValidatorDUI)
-  documentIdentity: string;
-  
-  isActive: boolean;
+  documentIdentity: string
+
+  isActive: boolean
 
   @IsString()
   @IsNotEmpty()
   @IsEmail()
-  email: string;
+  email: string
 
   @IsNumber()
   @IsNotEmpty()
-  typeClientId: number;
+  typeClientId: number
 }

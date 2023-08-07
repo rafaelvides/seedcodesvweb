@@ -1,23 +1,23 @@
-import {PrimaryGeneratedColumn, Entity, Column, OneToMany} from 'typeorm'
-import {Service} from '../service/service.entity'
+import { PrimaryGeneratedColumn, Entity, Column, OneToMany } from 'typeorm'
+import { Service } from '../service/service.entity'
 
 @Entity()
-export class typeService{
-    @PrimaryGeneratedColumn()
-    id: number
+export class typeService {
+  @PrimaryGeneratedColumn()
+  id: number
 
-    @Column()
-    name: string
+  @Column()
+  name: string
 
-    @Column()
-    description: string
+  @Column()
+  description: string
 
-    @Column()
-    payment: number
+  @Column()
+  payment: number
 
-    @Column({default: true})
-    isActive: boolean
+  @Column({ default: true })
+  isActive: boolean
 
-    @OneToMany(() => Service, service => service.typeService)
-    services: Service[]
+  @OneToMany(() => Service, service => service.typeService)
+  services: Service[]
 }

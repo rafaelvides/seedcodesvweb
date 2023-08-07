@@ -1,3 +1,3 @@
-export class updateTypeClientDto{
-    tipe: string
+export class updateTypeClientDto {
+  tipe: string
 }
