@@ -7,21 +7,11 @@ import {
   ParseIntPipe,
   Delete,
   Put,
-<<<<<<< HEAD
-} from '@nestjs/common';
-import { ContactService } from './contact.service';
-import { createContactDto } from './dto/create-contact.dto';
-import { Contact } from './contact.entity';
-import { updateContactDto } from './dto/update-contact.dto';
-=======
 } from '@nestjs/common'
 import { ContactService } from './contact.service'
 import { createContactDto } from './dto/create-contact.dto'
 import { Contact } from './contact.entity'
 import { updateContactDto } from './dto/update-contact.dto'
-import { Auth } from 'src/auth/decorators'
-import { ValidRoles } from 'src/auth/interfaces'
->>>>>>> 9807dfb11b3a48f0cfca087056b6c4997126b6d6
 
 @Controller('Contact')
 export class contactController {
