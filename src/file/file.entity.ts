@@ -1,24 +1,23 @@
 import { Folder } from 'src/folder/folder.entity'
-import {PrimaryGeneratedColumn, Entity, Column, ManyToOne} from 'typeorm'
+import { PrimaryGeneratedColumn, Entity, Column, ManyToOne } from 'typeorm'
 
 @Entity()
 export class File {
-    @PrimaryGeneratedColumn()
-    id: number
+  @PrimaryGeneratedColumn()
+  id: number
 
-    @Column()
-    file: string
+  @Column()
+  file: string
 
-    @Column()
-    extension: string
+  @Column()
+  extension: string
 
-    @Column()
-    folderId: number
+  @Column()
+  folderId: number
 
-    @Column({ default: true })
-    isActive: boolean
+  @Column({ default: true })
+  isActive: boolean
 
-    @ManyToOne(() => Folder, folder => folder.files)
-    folder: Folder
-
+  @ManyToOne(() => Folder, folder => folder.files)
+  folder: Folder
 }

@@ -1,30 +1,28 @@
-import {IsString, IsNotEmpty, MinLength, IsNumber} from 'class-validator';
-export class createProyectDto{
+import { IsString, IsNotEmpty, MinLength, IsNumber } from 'class-validator'
+export class createProyectDto {
+  @IsString()
+  @IsNotEmpty()
+  nameProyect: string
 
-    @IsString()
-    @IsNotEmpty()
-    nameProyect: string
+  @IsString()
+  @IsNotEmpty()
+  description: string
 
-    @IsString()
-    @IsNotEmpty()
-    description: string
+  isActive: boolean
 
-    isActive: boolean
+  @IsNumber()
+  @IsNotEmpty()
+  toolId: number
 
+  @IsNumber()
+  @IsNotEmpty()
+  typeProjectId: number
 
-    @IsNumber()
-    @IsNotEmpty()
-    toolId: number
+  @IsNumber()
+  @IsNotEmpty()
+  clientId: number
 
-    @IsNumber()
-    @IsNotEmpty()
-    typeProjectId: number
-
-    @IsNumber()
-    @IsNotEmpty()
-    clientId: number
-
-    @IsNumber()
-    @IsNotEmpty()
-    userId: number
+  @IsNumber()
+  @IsNotEmpty()
+  userId: number
 }

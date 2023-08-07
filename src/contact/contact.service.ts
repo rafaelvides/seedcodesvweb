@@ -1,33 +1,32 @@
-import { Injectable, HttpException, HttpStatus, Inject } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Contact } from './contact.entity';
-import { Repository } from 'typeorm';
-import { createContactDto } from './dto/create-contact.dto';
-import { updateContactDto } from './dto/update-contact.dto';
+import { Injectable, HttpException, HttpStatus, Inject } from '@nestjs/common'
+import { InjectRepository } from '@nestjs/typeorm'
+import { Contact } from './contact.entity'
+import { Repository } from 'typeorm'
+import { createContactDto } from './dto/create-contact.dto'
+import { updateContactDto } from './dto/update-contact.dto'
 
 @Injectable()
 export class ContactService {
   constructor(
-    @InjectRepository(Contact) private contactRepository: Repository<Contact>,
+    @InjectRepository(Contact) private contactRepository: Repository<Contact>
   ) {}
 
   async createContact(contact: createContactDto) {
     try {
-
-      this.contactRepository.save(contact);
+      this.contactRepository.save(contact)
       return {
         ok: true,
         msg: 'Contact create',
         contact,
-      };
+      }
     } catch (error) {
       throw new HttpException(
         {
           ok: false,
           msg: `Error -> ${error.message}`,
         },
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
@@ -37,19 +36,19 @@ export class ContactService {
         where: {
           isActive: true,
         },
-      });
+      })
       if (contacts.length > 0) {
         // Si hay clientes activos, devolver la respuesta con los clientes encontrados
         return {
           ok: true,
           contacts,
-        };
+        }
       } else {
         // Si no hay clientes activos, devolver la respuesta indicando que no se encontraron clientes
         return {
           ok: false,
           msg: 'No active contacts found',
-        };
+        }
       }
     } catch (error) {
       throw new HttpException(
@@ -57,8 +56,8 @@ export class ContactService {
           ok: false,
           msg: `Error -> ${error.message}`,
         },
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
@@ -69,26 +68,26 @@ export class ContactService {
           id,
           isActive: true,
         },
-      });
+      })
       if (!contactFound) {
         return {
           ok: false,
           mensaje: 'Contact not found',
           status: HttpStatus.NOT_FOUND,
-        };
+        }
       }
       return {
         ok: true,
         contactFound,
-      };
+      }
     } catch (error) {
       throw new HttpException(
         {
           ok: false,
           msg: `Error -> ${error.message}`,
         },
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
@@ -99,29 +98,29 @@ export class ContactService {
           id,
           isActive: true,
         },
-      });
+      })
       if (!contact) {
         return {
           ok: false,
           mensaje: 'Contact does not exist in the database',
           status: HttpStatus.NOT_FOUND,
-        };
+        }
       }
-      contact.isActive = false; // Cambiar el estado a 0 (inactivo)
-      await this.contactRepository.save(contact);
+      contact.isActive = false // Cambiar el estado a 0 (inactivo)
+      await this.contactRepository.save(contact)
 
       return {
         ok: true,
         msg: 'Contact successfully delete',
-      };
+      }
     } catch (error) {
       throw new HttpException(
         {
           ok: false,
           msg: `Error -> ${error.message}`,
         },
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
@@ -132,29 +131,29 @@ export class ContactService {
           id,
           isActive: true,
         },
-      });
+      })
       if (!contactFound) {
         return {
           ok: false,
           mensaje: 'Contact not found',
           status: HttpStatus.NOT_FOUND,
-        };
+        }
       }
 
-      const updateContact = Object.assign(contactFound, contact);
-      this.contactRepository.save(updateContact);
+      const updateContact = Object.assign(contactFound, contact)
+      this.contactRepository.save(updateContact)
       return {
         ok: true,
         msg: 'Contact was update',
-      };
+      }
     } catch (error) {
       throw new HttpException(
         {
           ok: false,
           msg: `Error -> ${error.message}`,
         },
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 }

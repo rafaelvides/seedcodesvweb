@@ -1,31 +1,37 @@
-import { PrimaryGeneratedColumn, Entity, Column, ManyToOne, OneToMany } from 'typeorm';
-import { Role } from '../role/role.entity';
-import {Proyect} from '../project/project.entity'
+import {
+  PrimaryGeneratedColumn,
+  Entity,
+  Column,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm'
+import { Role } from '../role/role.entity'
+import { Proyect } from '../project/project.entity'
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: number
 
   @Column()
-  lastname: string;
+  lastname: string
 
   @Column()
-  email: string;
+  email: string
 
   @Column()
-  password: string;
+  password: string
 
   @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
-  registerDate: Date;
+  registerDate: Date
 
   @Column()
-  roleId: number;
+  roleId: number
 
-  @Column({default: true})
+  @Column({ default: true })
   isActive: boolean
 
-  @ManyToOne(() => Role, (role) => role.users)
+  @ManyToOne(() => Role, role => role.users)
   Role: Role
 
   @OneToMany(() => Proyect, proyect => proyect.user)

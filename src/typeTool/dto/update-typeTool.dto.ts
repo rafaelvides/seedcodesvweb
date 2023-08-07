@@ -1,3 +1,3 @@
-export class updateTypeToolDto{
-    type: string
+export class updateTypeToolDto {
+  type: string
 }

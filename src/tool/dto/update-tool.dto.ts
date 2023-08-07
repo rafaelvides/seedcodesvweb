@@ -1,4 +1,4 @@
-export class updateToolDto{
-    name: string
-    description: string
+export class updateToolDto {
+  name: string
+  description: string
 }

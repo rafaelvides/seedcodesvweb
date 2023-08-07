@@ -7,13 +7,13 @@ import {
   ParseIntPipe,
   Delete,
   Put,
-} from '@nestjs/common';
-import { RoleService } from './role.service';
-import { createRoleDto } from './dto/create-role.dto';
-import { Role } from './role.entity';
-import { updateRoleDto } from './dto/update-role.dto';
-import { Auth } from '../auth/decorators';
-import { ValidRoles } from 'src/auth/interfaces';
+} from '@nestjs/common'
+import { RoleService } from './role.service'
+import { createRoleDto } from './dto/create-role.dto'
+import { Role } from './role.entity'
+import { updateRoleDto } from './dto/update-role.dto'
+import { Auth } from '../auth/decorators'
+import { ValidRoles } from 'src/auth/interfaces'
 
 @Controller('Role')
 export class roleController {
@@ -22,7 +22,7 @@ export class roleController {
   @Post()
   @Auth(ValidRoles.admin)
   createRole(@Body() newRole: createRoleDto) {
-    return this.roleService.createRole(newRole);
+    return this.roleService.createRole(newRole)
   }
 
   @Get()
@@ -30,27 +30,27 @@ export class roleController {
   getRoles(): Promise<
     { ok: boolean; roles: Role[]; msg?: string } | { ok: boolean; msg: string }
   > {
-    return this.roleService.getRoles();
+    return this.roleService.getRoles()
   }
 
   @Get(':id')
   @Auth(ValidRoles.admin)
   getRole(@Param('id', ParseIntPipe) id: number) {
-    return this.roleService.getRole(id);
+    return this.roleService.getRole(id)
   }
 
   @Delete(':id')
   @Auth(ValidRoles.admin)
   deleteRole(@Param('id', ParseIntPipe) id: number) {
-    return this.roleService.deleteRole(id);
+    return this.roleService.deleteRole(id)
   }
 
   @Put(':id')
   @Auth(ValidRoles.admin)
   updateRole(
     @Param('id', ParseIntPipe) id: number,
-    @Body() role: updateRoleDto,
+    @Body() role: updateRoleDto
   ) {
-    return this.roleService.updateRole(id, role);
+    return this.roleService.updateRole(id, role)
   }
 }

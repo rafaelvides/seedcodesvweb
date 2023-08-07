@@ -1,3 +1,3 @@
-export class updateRoleDto{
-    rol: string
+export class updateRoleDto {
+  rol: string
 }

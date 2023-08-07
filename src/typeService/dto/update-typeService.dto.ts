@@ -1,5 +1,5 @@
-export class updateTypeServiceDto{
-    name: string
-    description: string
-    payment: number
+export class updateTypeServiceDto {
+  name: string
+  description: string
+  payment: number
 }

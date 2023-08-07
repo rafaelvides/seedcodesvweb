@@ -1,4 +1,4 @@
-export class updateProjectDto{
-    nameProyect: string
-    description: string
+export class updateProjectDto {
+  nameProyect: string
+  description: string
 }

@@ -1,39 +1,45 @@
 import { typeClient } from '../typeClient/typeClient.entity'
-import {Column,Entity, ManyToOne, PrimaryGeneratedColumn, OneToMany} from 'typeorm'
-import {Proyect} from '../project/project.entity'
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  OneToMany,
+} from 'typeorm'
+import { Proyect } from '../project/project.entity'
 
 @Entity()
 export class Client {
-    @PrimaryGeneratedColumn()
-    id: number
+  @PrimaryGeneratedColumn()
+  id: number
 
-    @Column()
-    firsname: string
+  @Column()
+  firsname: string
 
-    @Column()
-    lastname: string
+  @Column()
+  lastname: string
 
-    @Column()
-    telephone: string
+  @Column()
+  telephone: string
 
-    @Column()
-    documentIdentity: string
+  @Column()
+  documentIdentity: string
 
-    @Column({type: 'datetime' , default:() => 'CURRENT_TIMESTAMP'})
-    registrationDate: Date
-    
-    @Column()
-    email: string
+  @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
+  registrationDate: Date
 
-    @Column({ default: true })
-    isActive: boolean
+  @Column()
+  email: string
 
-    @Column()
-    typeClientId: number
+  @Column({ default: true })
+  isActive: boolean
 
-   @ManyToOne(() => typeClient, typeclient => typeclient.clients)
-    typeClient: typeClient
+  @Column()
+  typeClientId: number
 
-   @OneToMany(() => Proyect, proyect => proyect.client)
-   proyects: Proyect[]
+  @ManyToOne(() => typeClient, typeclient => typeclient.clients)
+  typeClient: typeClient
+
+  @OneToMany(() => Proyect, proyect => proyect.client)
+  proyects: Proyect[]
 }

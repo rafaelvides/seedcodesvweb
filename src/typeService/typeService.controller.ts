@@ -7,13 +7,13 @@ import {
   ParseIntPipe,
   Delete,
   Put,
-} from '@nestjs/common';
-import { typeServiceService } from './typeService.service';
-import { createTypeServiceDto } from './dto/create-typeService.dto';
-import { typeService } from './typeService.entity';
-import { updateTypeServiceDto } from './dto/update-typeService.dto';
-import { Auth } from 'src/auth/decorators';
-import { ValidRoles } from 'src/auth/interfaces';
+} from '@nestjs/common'
+import { typeServiceService } from './typeService.service'
+import { createTypeServiceDto } from './dto/create-typeService.dto'
+import { typeService } from './typeService.entity'
+import { updateTypeServiceDto } from './dto/update-typeService.dto'
+import { Auth } from 'src/auth/decorators'
+import { ValidRoles } from 'src/auth/interfaces'
 
 @Controller('typeService')
 export class typeServiceController {
@@ -21,7 +21,7 @@ export class typeServiceController {
 
   @Post()
   createTypeService(@Body() newtypeService: createTypeServiceDto) {
-    return this.typeServiceService.createTypeService(newtypeService);
+    return this.typeServiceService.createTypeService(newtypeService)
   }
 
   @Get()
@@ -29,25 +29,25 @@ export class typeServiceController {
     | { ok: boolean; typeServices: typeService[]; msg?: string }
     | { ok: boolean; msg: string }
   > {
-    return this.typeServiceService.gettypeServices();
+    return this.typeServiceService.gettypeServices()
   }
 
   @Get(':id')
   @Auth(ValidRoles.admin)
   getTypeService(@Param('id', ParseIntPipe) id: number) {
-    return this.typeServiceService.gettypeService(id);
+    return this.typeServiceService.gettypeService(id)
   }
 
   @Delete(':id')
   deleteTypeService(@Param('id', ParseIntPipe) id: number) {
-    return this.typeServiceService.deleteTypeService(id);
+    return this.typeServiceService.deleteTypeService(id)
   }
 
   @Put(':id')
   updateTypeService(
     @Param('id', ParseIntPipe) id: number,
-    @Body() typeService: updateTypeServiceDto,
+    @Body() typeService: updateTypeServiceDto
   ) {
-    return this.typeServiceService.updateTypeService(id, typeService);
+    return this.typeServiceService.updateTypeService(id, typeService)
   }
 }

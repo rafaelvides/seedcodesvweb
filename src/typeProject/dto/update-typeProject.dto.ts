@@ -1,3 +1,3 @@
-export class updateTypeProjectDto{
-    type: string
+export class updateTypeProjectDto {
+  type: string
 }

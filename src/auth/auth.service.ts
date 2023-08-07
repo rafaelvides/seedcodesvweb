@@ -1,32 +1,31 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { compare, hash } from 'bcrypt';
-import { userService } from '../user/user.service'; // Importa el servicio de la base de datos de usuarios
-import { User } from '../user/user.entity'; // Importa el modelo de usuario
+import { Injectable, UnauthorizedException } from '@nestjs/common'
+import { JwtService } from '@nestjs/jwt'
+import { compare, hash } from 'bcrypt'
+import { userService } from '../user/user.service' // Importa el servicio de la base de datos de usuarios
+import { User } from '../user/user.entity' // Importa el modelo de usuario
 @Injectable()
 export class AuthService {
   constructor(
     private jwtService: JwtService,
-    private userService: userService,
+    private userService: userService
   ) {}
 
   async validateUser(email: string, password: string): Promise<any> {
-    const user = await this.userService.findByUsername(email);
+    const user = await this.userService.findByUsername(email)
     if (!user) {
-      throw new UnauthorizedException('Invalid Email credentials');
+      throw new UnauthorizedException('Invalid Email credentials')
     }
 
-    const isPasswordValid = await compare(password, user.password);
+    const isPasswordValid = await compare(password, user.password)
     if (isPasswordValid) {
-      return user;
+      return user
     }
 
-    throw new UnauthorizedException('Invalid Password credentials');
+    throw new UnauthorizedException('Invalid Password credentials')
   }
 
   async login(user: User): Promise<any> {
-    const payload = { email: user.email, sub: user.id, rolId: user.Role.rol };
-
+    const payload = { email: user.email, sub: user.id, rolId: user.Role.rol }
 
     //const rol =  await this.roleService.findByRoleId(user.roleId)
     return {
@@ -35,13 +34,13 @@ export class AuthService {
         id: user.id,
         lastname: user.lastname,
         email: user.email,
-        rolId: user.Role.rol
+        rolId: user.Role.rol,
       },
-    };
+    }
   }
 
   async hashPassword(password: string): Promise<string> {
-    const saltRounds = 10;
-    return hash(password, saltRounds);
+    const saltRounds = 10
+    return hash(password, saltRounds)
   }
 }

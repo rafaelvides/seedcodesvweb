@@ -1,27 +1,25 @@
-import {IsString, IsNotEmpty, IsNumber, IsInt, IsUrl} from 'class-validator';
+import { IsString, IsNotEmpty, IsNumber, IsInt, IsUrl } from 'class-validator'
 
-export class createHomeDto{
+export class createHomeDto {
+  @IsString()
+  @IsNotEmpty()
+  motto: string
 
-    @IsString()
-    @IsNotEmpty()
-    motto: string
+  @IsString()
+  @IsNotEmpty()
+  mission: string
 
-    @IsString()
-    @IsNotEmpty()
-    mission: string
+  @IsString()
+  @IsNotEmpty()
+  vision: string
 
-    @IsString()
-    @IsNotEmpty()
-    vision: string
+  @IsString()
+  @IsNotEmpty()
+  values: string
 
-    @IsString()
-    @IsNotEmpty()
-    values: string
+  @IsNotEmpty()
+  @IsUrl()
+  imag: string
 
-    @IsNotEmpty()
-    @IsUrl()
-    imag: string
-
-    isActive: boolean
-
+  isActive: boolean
 }
