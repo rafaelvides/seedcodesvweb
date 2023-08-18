@@ -6,7 +6,7 @@ import { hash } from 'bcrypt'
 import { createUserDto } from './dto/create-user.dto'
 import { updateUserDto } from './dto/update-user.dto'
 import { RoleService } from '../role/role.service'
-import { Role } from 'src/role/role.entity'
+import { Role } from '../role/role.entity'
 
 @Injectable()
 export class userService {

@@ -13,7 +13,7 @@ import { createRoleDto } from './dto/create-role.dto'
 import { Role } from './role.entity'
 import { updateRoleDto } from './dto/update-role.dto'
 import { Auth } from '../auth/decorators'
-import { ValidRoles } from 'src/auth/interfaces'
+import { ValidRoles } from '../auth/interfaces'
 
 @Controller('Role')
 export class roleController {

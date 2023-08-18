@@ -18,11 +18,11 @@ export class AuthController {
     return this.authService.login(user)
   }
 
-  @Post('protected')
+  /*@Post('protected')
   @UseGuards(AuthGuard('jwt'))
   async protectedRoute(): Promise<any> {
     return 'Has accedido a una ruta protegida'
-  }
+  }*/
 
   @Get('private2')
   @Auth(ValidRoles.admin)

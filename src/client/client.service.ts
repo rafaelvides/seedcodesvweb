@@ -1,6 +1,6 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Client } from 'src/client/client.entity'
+import { Client } from '../client/client.entity'
 import { Repository } from 'typeorm'
 import { CreateClientDto } from '../client/dto/create-client.dto'
 import { updateClientDto } from './dto/update-client.dto'

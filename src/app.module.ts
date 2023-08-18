@@ -21,12 +21,11 @@ import { AuthMiddleware } from './auth/auth.middleware'
 import { JwtModule } from '@nestjs/jwt'
 import { Role } from './role/role.entity'
 import * as dotenv from 'dotenv'
-import { APP_GUARD } from '@nestjs/core'
-import { UserRoleGuard } from './auth/guards/user-role/user-role.guard'
-
+import { PassportModule } from '@nestjs/passport'
 dotenv.config()
 @Module({
   imports: [
+    PassportModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET,
       // otras opciones de configuración...

@@ -12,8 +12,8 @@ import { userService } from './user.service'
 import { createUserDto } from './dto/create-user.dto'
 import { User } from './user.entity'
 import { updateUserDto } from './dto/update-user.dto'
-import { Auth } from 'src/auth/decorators'
-import { ValidRoles } from 'src/auth/interfaces'
+import { Auth } from '../auth/decorators'
+import { ValidRoles } from '../auth/interfaces'
 
 @Controller('User')
 export class userController {
